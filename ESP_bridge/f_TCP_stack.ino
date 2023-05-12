@@ -23,17 +23,11 @@ void ConnectToWifi(){
 }
 void SendDataToServer(){
 //vytvorime spojeni, posleme data a precteme jestli nejaka neprisla, pak zavreme spojeni
-    /*if (!wifiClient.connect(ipServer, 23)) {
+    if (!wifiClient.connect(ipServer, 23)) {
           Serial.println("Connection to server failed! IP:"+ipServer.toString());
         } else {
 
-        uint8_t bits = uint8_t(digitalRead(PIN_FAN));
-          
-        uint8_t sbuf[] = {DATA_SEND_ID,int(temp_cellar*100)/256, int(temp_cellar*100)%256,int(temp_polybox*100)/256, int(temp_polybox*100)%256,
-        int(SHT_temperature*100)/256, int(SHT_temperature*100)%256,int(SHT_humidity*100)/256, int(SHT_humidity*100)%256,
-        int(SHT_dew_point*100)/256, int(SHT_dew_point*100)%256, bits};
-
-        int cnt = Send(sbuf,12);
+        int cnt = Send(read_buffer,buffer_ptr);
         if(cnt<=0){
           Serial.println("Write failed!");
         }
@@ -41,13 +35,12 @@ void SendDataToServer(){
         delay(50);
         while(wifiClient.available()){
           uint8_t rcv = wifiClient.read();
-          //Receive(rcv);
-          //Serial.write(rcv);
+          Serial.write(rcv);
         }
             
         }
         wifiClient.stop();
-        Serial.println("Data sent to server!");*/
+        Serial.println("Data sent to server!");
 }
 
 

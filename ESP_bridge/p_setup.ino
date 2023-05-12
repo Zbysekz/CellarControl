@@ -31,4 +31,7 @@ void ICACHE_FLASH_ATTR setup(){
   
   Serial.println(F("Setup finished"));
 
+  buffer_ptr = 0;
+  receive_state = 0;
+
 }
