@@ -4,7 +4,7 @@
 #include <ESPAsyncWebServer.h>
 #include <ArduinoOTA.h>
 
-#include "credentials.h" // separate file for credentials
+#include "credentials/credentials.h" // separate file for credentials
 
 #include <EEPROM.h>
 
