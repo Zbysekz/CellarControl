@@ -5,24 +5,26 @@
 
 void loop(){
 
-  ArduinoOTA.handle();
-
-  //digitalWrite(PIN_RELE, true);
+  digitalWrite(PIN_WATER_PUMP, !digitalRead(PIN_WATER_LEVEL));
   
-  if(paramsValid){
+  if(paramsValid &&false){
     if(CheckTimer(tmrControlLoop, 5000L)){
 
-      
-      if (!sht20.connected())
+      Serial.println("Check");
+      if (!sht20.connected()){
         errorFlags |= 1UL << ERROR_SHT20;
-      else
+        Serial.println("Not connected!!");
+      }
+      else{
         errorFlags &= ~(1UL << ERROR_SHT20); // clear that error
-
-      
-      SHT_humidity = sht20.humidity();
-      SHT_temperature = sht20.temperature();
-      SHT_dew_point = sht20.dew_point();
-      
+        Serial.println("Connected!!");
+        SHT_humidity = sht20.humidity();
+        SHT_temperature = sht20.temperature();
+        SHT_dew_point = sht20.dew_point();
+        
+        Serial.println("Temp:");
+        Serial.println(SHT_temperature);
+      }
       
       if(!ReadTemperatures())
         errorFlags |= 1UL << ERROR_TEMP;
@@ -74,10 +76,10 @@ void loop(){
       }
     }*/
     if(CheckTimer(tmrSendDataToServer, 30000L)){
-      SendDataToServer();
+      //SendDataToServer();
     }
   }else{
-    Serial.println(F("Parameters not valid!"));
+    //Serial.println(F("Parameters not valid!"));
   }
 
  

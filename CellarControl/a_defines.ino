@@ -2,8 +2,6 @@
 DeviceAddress addrTempSensorCellar = {0x28,0xFF,0x64,0x1E,0x15,0xEA,0x6A,0x9D};
 DeviceAddress addrTempSensorPolybox = {0x28,0xFF,0x64,0x1E,0x15,0x13,0x5C,0xD5};
 
-AsyncWebServer server(80);
-
 uFire_SHT20 sht20;
 
 #define EEADDR_START 0
@@ -32,28 +30,27 @@ bool output,heating;
 unsigned long tmrControlLoop,tmrSendDataToServer, tmrFridge;
 int fridgeCooled;
 
-//wifi
-bool connectedToWifi = false;
-
-const char* ssid = "ZZ_wifi2";
-const char* password = "*****";
-
-// the IP address for the shield:
-IPAddress ip(192, 168, 0, 33);
-
-IPAddress gateway(192, 168, 0, 1);
-IPAddress subnet(255, 255, 255, 0);
-IPAddress ipServer(192, 168, 0, 3);  
-
-WiFiClient wifiClient;
-
 #define DATA_SEND_ID 109
 
 
-#define PIN_ONE_WIRE_BUS 12
-#define PIN_PUMP 16
-#define PIN_FAN 13
-#define PIN_FRIDGE 14
+#define PIN_ONE_WIRE_BUS 2
+#define PIN_PUMP 9
+#define PIN_FAN 15
+#define PIN_FRIDGE 12
+#define PIN_WATER_PUMP 5
+
+#define PIN_VALVE_GARDEN1 6
+#define PIN_VALVE_GARDEN2 10
+#define PIN_VALVE_GARDEN3 11
+
+#define PIN_VALVE_CELLAR1 7
+#define PIN_VALVE_CELLAR2 8
+
+#define PIN_WATER_LEVEL 16
+#define PIN_HEATING 17
+#define PIN_BOX_FANS 3
+#define PIN_RESERVE 4
+
 
 #define ERROR_TEMP 0
 #define ERROR_SHT20 1

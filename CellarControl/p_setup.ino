@@ -1,12 +1,13 @@
 
 
-void ICACHE_FLASH_ATTR setup(){
+void setup(){
 
   Serial.begin(9600);
 
   Serial.println(F("Program start"));
 
-  pinMode(PIN_ONE_WIRE_BUS, INPUT_PULLUP);
+  //pinMode(18, INPUT_PULLUP);//I2C pull-ups
+  //pinMode(19, INPUT_PULLUP);
 
   //setup onewire temperature sensors
   oneWireSensors.begin();
@@ -14,31 +15,40 @@ void ICACHE_FLASH_ATTR setup(){
   pinMode(PIN_PUMP, OUTPUT);
   pinMode(PIN_FAN, OUTPUT);
   pinMode(PIN_FRIDGE, OUTPUT);
+  pinMode(PIN_WATER_PUMP, OUTPUT);
+  pinMode(PIN_VALVE_GARDEN1, OUTPUT);
+  pinMode(PIN_VALVE_GARDEN2, OUTPUT);
+  pinMode(PIN_VALVE_GARDEN3, OUTPUT);
+  pinMode(PIN_VALVE_CELLAR1, OUTPUT);
+  pinMode(PIN_VALVE_CELLAR2, OUTPUT);
+  pinMode(PIN_HEATING, OUTPUT);
+  pinMode(PIN_BOX_FANS, OUTPUT);
+  pinMode(PIN_RESERVE, OUTPUT);
+  pinMode(PIN_WATER_LEVEL, INPUT_PULLUP);
+
+
+
   digitalWrite(PIN_PUMP, false);
   digitalWrite(PIN_FAN, false);
   digitalWrite(PIN_FRIDGE, false);
+  digitalWrite(PIN_WATER_PUMP, false);
+  digitalWrite(PIN_VALVE_GARDEN1, false);
+  digitalWrite(PIN_VALVE_GARDEN2, false);
+  digitalWrite(PIN_VALVE_GARDEN3, false);
+  digitalWrite(PIN_VALVE_CELLAR1, false);
+   digitalWrite(PIN_VALVE_CELLAR2, false);
+   digitalWrite(PIN_HEATING, false);
+   digitalWrite(PIN_BOX_FANS, false);
+   digitalWrite(PIN_RESERVE, false);
+ 
   
-
+  
+  
   //WIFI
-  
-  WiFi.mode(WIFI_STA);
-  WiFi.config(ip, gateway, subnet);   
-
-  ConnectToWifi();
-
-  server.begin();
-  ServerSetup();
-  Serial.println("HTTP server started");
-
-  
-  ArduinoOTA.setHostname("Cellar A/C unit");
-  ArduinoOTA.begin();
-
-
-  EEPROM.begin(512);
 
   #define ARR_LEN 8*2
   uint8_t bytes[ARR_LEN];
+  
   if(ReadFromEEPROM(bytes, ARR_LEN)){
     uint8_t ptr = 0;
     setpoint = ReadValue(bytes, ptr);
@@ -68,11 +78,11 @@ void ICACHE_FLASH_ATTR setup(){
   delay(300);
   digitalWrite(LED_BUILTIN, true);
   */
-  Serial.println(F("Setup finished"));
+  
+  //Wire.begin();
+  //sht20.begin();
 
   OneWireDevicesPrintAddr(); // to find address of dallas temperature sensors
 
-  Wire.begin();
-  sht20.begin();
-
+  Serial.println(F("Setup finished"));
 }

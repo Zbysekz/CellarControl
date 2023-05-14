@@ -66,6 +66,8 @@ uint16_t CRC16(uint8_t* bytes, uint8_t length)
 void OneWireDevicesPrintAddr(){
   int oneWireDeviceCnt = oneWireSensors.getDeviceCount();
 
+  Serial.print("One wire devices found: ");
+  Serial.print(oneWireDeviceCnt, DEC);
   DeviceAddress tempDeviceAddress;
   for(int i=0;i<oneWireDeviceCnt; i++) {
     // Search the wire for address
@@ -133,8 +135,7 @@ void WriteToEEPROM(uint8_t bytes[], int len){
   }
   int crc = CRC16(bytes, len);
   EEPROM.write(addr++, crc/256);
-  EEPROM.write(addr++, crc%256);
-  EEPROM.commit(); 
+  EEPROM.write(addr++, crc%256); 
 }
 
 bool ReadFromEEPROM(uint8_t* bytes, int len){
