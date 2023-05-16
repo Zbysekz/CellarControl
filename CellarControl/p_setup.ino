@@ -3,6 +3,7 @@
 void setup(){
 
   Serial.begin(9600);
+  bridgeSerial.begin(9600);
 
   Serial.println(F("Program start"));
 
@@ -36,10 +37,10 @@ void setup(){
   digitalWrite(PIN_VALVE_GARDEN2, false);
   digitalWrite(PIN_VALVE_GARDEN3, false);
   digitalWrite(PIN_VALVE_CELLAR1, false);
-   digitalWrite(PIN_VALVE_CELLAR2, false);
-   digitalWrite(PIN_HEATING, false);
-   digitalWrite(PIN_BOX_FANS, false);
-   digitalWrite(PIN_RESERVE, false);
+  digitalWrite(PIN_VALVE_CELLAR2, false);
+  digitalWrite(PIN_HEATING, false);
+  digitalWrite(PIN_BOX_FANS, false);
+  digitalWrite(PIN_RESERVE, false);
  
   
   
@@ -51,13 +52,7 @@ void setup(){
   
   if(ReadFromEEPROM(bytes, ARR_LEN)){
     uint8_t ptr = 0;
-    setpoint = ReadValue(bytes, ptr);
-    hysteresis = ReadValue(bytes, ptr);
-    boilingPoint1 = ReadValue(bytes, ptr);
-    boilingPoint2 = ReadValue(bytes, ptr);
-    triplePoint1 = ReadValue(bytes, ptr);
-    triplePoint2 = ReadValue(bytes, ptr);
-    fridgeCooled = ReadValue(bytes, ptr);
+    temp_setpoint = ReadValue(bytes, ptr);
     uint16_t bits = ReadValue(bytes, ptr);
 
     tempControl_autMan = bits&(1<<0);
@@ -72,6 +67,8 @@ void setup(){
   }
 
   fridgeCooled = 0;
+
+  water_pump_out=false;
   
 
   /*digitalWrite(LED_BUILTIN, false);

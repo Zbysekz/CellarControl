@@ -13,22 +13,41 @@ float SHT_humidity,SHT_temperature,SHT_dew_point;
 float temp_cellar, temp_polybox;
 
 //setpoints
-float setpoint;
-float hysteresis;
+float temp_setpoint;
+float temp_hysteresis = 0.5;
 
 //states
 bool tempControl_autMan,tempControl_onOff,tempPump_onOff;
 bool fanControl_autMan,fanControl_onOff;
+bool water_pump_alarm;
+
+// water pump control
+bool water_pump_out;
+#define WATER_PUMP_MAX_ON_TIME 3*60000UL
+#define WATER_PUMP_ON_DELAY 10000UL
+#define WATER_PUMP_OFF_DELAY 8000UL
+#define WATER_PUMP_ALARM_RESET 10*60000UL
 
 
 //errors
 unsigned long errorFlags;
 bool paramsValid = false;
-//aux
-bool output,heating;
+
 //timers
-unsigned long tmrControlLoop,tmrSendDataToServer, tmrFridge;
+unsigned long tmrControlLoop,tmrCommWithServer, tmrFridge, tmrWaterPumpAlarmReset,tmrWaterPumpOnDelay,tmrWaterPumpOnTime,tmrWaterPumpOffDelay;
 int fridgeCooled;
+
+//receive
+#define RXBUFFSIZE 20
+#define RXQUEUESIZE 3
+
+uint8_t errorCnt_dataCorrupt, errorCnt_CRCmismatch, errorCnt_BufferFull;
+uint8_t rxBuffer[RXQUEUESIZE][RXBUFFSIZE];//for first item if >0 command is inside, 0 after it is proccessed
+bool rxBufferMsgReady[RXQUEUESIZE];
+uint8_t rxLen,crcH,crcL,readState,rxPtr,rxBufPtr=0;
+bool xServerEndPacket;
+
+int gi;//for for loops in switch-case
 
 #define DATA_SEND_ID 109
 
@@ -59,3 +78,5 @@ int fridgeCooled;
 OneWire oneWire(PIN_ONE_WIRE_BUS);
 
 DallasTemperature oneWireSensors(&oneWire);
+
+SoftwareSerial bridgeSerial(2, 3); // RX, TX
