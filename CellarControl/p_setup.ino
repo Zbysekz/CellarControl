@@ -3,7 +3,7 @@
 void setup(){
 
   Serial.begin(9600);
-  bridgeSerial.begin(9600);
+  //bridgeSerial.begin(9600);
 
   Serial.println(F("Program start"));
 
@@ -28,7 +28,6 @@ void setup(){
   pinMode(PIN_WATER_LEVEL, INPUT_PULLUP);
 
 
-
   digitalWrite(PIN_PUMP, false);
   digitalWrite(PIN_FAN, false);
   digitalWrite(PIN_FRIDGE, false);
@@ -41,10 +40,7 @@ void setup(){
   digitalWrite(PIN_HEATING, false);
   digitalWrite(PIN_BOX_FANS, false);
   digitalWrite(PIN_RESERVE, false);
- 
-  
-  
-  
+
   //WIFI
 
   #define ARR_LEN 8*2

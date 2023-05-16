@@ -1,9 +1,10 @@
 void loop(){
 
   if(paramsValid){
+
     if(CheckTimer(tmrControlLoop, 5000L)){
 
-      if (!sht20.connected()){
+      /*if (!sht20.connected()){
         errorFlags |= 1UL << ERROR_SHT20;
         Serial.println("Not connected!!");
       }
@@ -16,13 +17,14 @@ void loop(){
         
         Serial.println("Temp:");
         Serial.println(SHT_temperature);
-      }
-
+      }*/
+      Serial.println("gu");
       if(!ReadTemperatures()) //read all temp probes
         errorFlags |= 1UL << ERROR_TEMP;
       else
         errorFlags &= ~(1UL << ERROR_TEMP); // clear that error
-
+      
+      Serial.println("go");
 
       ControlWaterPump();
       ControlFan();

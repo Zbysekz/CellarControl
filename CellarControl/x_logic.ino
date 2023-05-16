@@ -70,7 +70,6 @@ void ControlPolybox(){
     }else{
       tempPump_onOff = false;
     }
-    
   }
   
   digitalWrite(PIN_FRIDGE, tempControl_onOff);

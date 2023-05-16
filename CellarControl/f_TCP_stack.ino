@@ -42,7 +42,7 @@ void Send(uint8_t d[],uint8_t d_len){
   data[4+d_len]=crc%256;
   data[5+d_len]=222;//end byte
 
-  bridgeSerial.write(data,6+d_len);
+//  bridgeSerial.write(data,6+d_len);
 }
 
 
