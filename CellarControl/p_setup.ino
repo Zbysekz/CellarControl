@@ -22,7 +22,7 @@ void setup(){
   pinMode(PIN_VALVE_GARDEN3, OUTPUT);
   pinMode(PIN_VALVE_CELLAR1, OUTPUT);
   pinMode(PIN_VALVE_CELLAR2, OUTPUT);
-  pinMode(PIN_HEATING, OUTPUT);
+  pinMode(PIN_FERMENTER_HEATING, OUTPUT);
   pinMode(PIN_BOX_FANS, OUTPUT);
   pinMode(PIN_RESERVE, OUTPUT);
   pinMode(PIN_WATER_LEVEL, INPUT_PULLUP);
@@ -37,7 +37,7 @@ void setup(){
   digitalWrite(PIN_VALVE_GARDEN3, false);
   digitalWrite(PIN_VALVE_CELLAR1, false);
   digitalWrite(PIN_VALVE_CELLAR2, false);
-  digitalWrite(PIN_HEATING, false);
+  digitalWrite(PIN_FERMENTER_HEATING, false);
   digitalWrite(PIN_BOX_FANS, false);
   digitalWrite(PIN_RESERVE, false);
 

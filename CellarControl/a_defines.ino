@@ -7,7 +7,7 @@ uFire_SHT20 sht20;
 #define EEADDR_START 0
 
 //parameters
-float triplePoint1, boilingPoint1, triplePoint2, boilingPoint2;
+float triplePoint1=0.0, boilingPoint1=98.0, triplePoint2=0.0, boilingPoint2=98.0;
 //temperatures
 float SHT_humidity,SHT_temperature,SHT_dew_point;
 float temp_cellar, temp_polybox;
@@ -66,7 +66,7 @@ int gi;//for for loops in switch-case
 #define PIN_VALVE_CELLAR2 8
 
 #define PIN_WATER_LEVEL 16
-#define PIN_HEATING 17
+#define PIN_FERMENTER_HEATING 17
 #define PIN_BOX_FANS 3
 #define PIN_RESERVE 4
 

@@ -24,8 +24,13 @@ void loop(){
       else
         errorFlags &= ~(1UL << ERROR_TEMP); // clear that error
       
-      Serial.println("go");
-
+      
+      if((errorFlags & (1UL << ERROR_TEMP))==0){
+          Serial.println(temp_cellar);          
+              digitalWrite(PIN_FERMENTER_HEATING, temp_cellar < 22);
+      }else{
+        digitalWrite(PIN_FERMENTER_HEATING,false);
+      }
       ControlWaterPump();
       ControlFan();
       ControlPolybox();
