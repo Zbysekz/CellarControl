@@ -36,6 +36,8 @@ bool paramsValid = false;
 //timers
 unsigned long tmrControlLoop,tmrCommWithServer, tmrFridge, tmrWaterPumpAlarmReset,tmrWaterPumpOnDelay,tmrWaterPumpOnTime,tmrWaterPumpOffDelay;
 int fridgeCooled;
+unsigned long tmrPumpPause, tmrPumpLongRun;
+bool pump_paused;
 
 //receive
 #define RXBUFFSIZE 20
@@ -51,6 +53,8 @@ int gi;//for for loops in switch-case
 
 #define DATA_SEND_ID 109
 
+#define PUMP_LONG_RUN 3*60000UL
+#define PUMP_PAUSE_TIME 30*60000UL
 
 #define PIN_ONE_WIRE_BUS 2
 #define PIN_PUMP 9

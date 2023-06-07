@@ -30,7 +30,7 @@ void setup(){
 
   digitalWrite(PIN_PUMP, false);
   digitalWrite(PIN_FAN, false);
-  digitalWrite(PIN_FRIDGE, false);
+  digitalWrite(PIN_FRIDGE, false); 
   digitalWrite(PIN_WATER_PUMP, false);
   digitalWrite(PIN_VALVE_GARDEN1, false);
   digitalWrite(PIN_VALVE_GARDEN2, false);

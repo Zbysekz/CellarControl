@@ -54,10 +54,15 @@ void ControlFan(){
       fanControl_onOff = false;
     }
   }
+
   digitalWrite(PIN_FAN, fanControl_onOff);
 }
 
 void ControlPolybox(){
+  tempControl_autMan = true;
+  tempControl_onOff = true;
+  temp_setpoint = 2;
+  temp_hysteresis = 0.5;
   // ------- TEMP CONTROL
   if(tempControl_autMan){
     if((errorFlags & (1UL << ERROR_TEMP))==0){
@@ -72,8 +77,33 @@ void ControlPolybox(){
     }
   }
   
+ 
+  if (!tempPump_onOff){
+    ResetTimer(tmrPumpLongRun);
+    pump_paused = false; 
+  }
+  if(!pump_paused && CheckTimer(tmrPumpLongRun, PUMP_LONG_RUN)){
+    ResetTimer(tmrPumpLongRun);
+    ResetTimer(tmrPumpPause);
+    pump_paused = true;
+  }
+  if (pump_paused && CheckTimer(tmrPumpPause, PUMP_PAUSE_TIME)){
+    pump_paused = false;
+    ResetTimer(tmrPumpLongRun);
+  }
+
+  Serial.print("paused:");
+  Serial.println(pump_paused);
+ 
+  Serial.print("tmr:");
+  Serial.println(tmrPumpLongRun);
+
+  Serial.print("temp_poly:");
+  Serial.println(temp_polybox);
+
   digitalWrite(PIN_FRIDGE, tempControl_onOff);
-  digitalWrite(PIN_PUMP, tempPump_onOff);
+  digitalWrite(PIN_PUMP, tempPump_onOff && !pump_paused);
+  digitalWrite(PIN_BOX_FANS, tempPump_onOff && !pump_paused);
 
   /*
   if(CheckTimer(tmrFridge,60000L)){//every minute increase / decrease variable

@@ -18,7 +18,7 @@ void loop(){
         Serial.println("Temp:");
         Serial.println(SHT_temperature);
       }*/
-      Serial.println("gu");
+      
       if(!ReadTemperatures()) //read all temp probes
         errorFlags |= 1UL << ERROR_TEMP;
       else
@@ -27,7 +27,7 @@ void loop(){
       
       if((errorFlags & (1UL << ERROR_TEMP))==0){
           Serial.println(temp_cellar);          
-              digitalWrite(PIN_FERMENTER_HEATING, temp_cellar < 22);
+          //    digitalWrite(PIN_FERMENTER_HEATING, temp_cellar < 0);
       }else{
         digitalWrite(PIN_FERMENTER_HEATING,false);
       }
