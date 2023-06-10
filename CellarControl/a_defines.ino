@@ -83,4 +83,4 @@ OneWire oneWire(PIN_ONE_WIRE_BUS);
 
 DallasTemperature oneWireSensors(&oneWire);
 
-//SoftwareSerial bridgeSerial(2, 3); // RX, TX
+SoftwareSerial bridgeSerial(2, 3); // RX, TX

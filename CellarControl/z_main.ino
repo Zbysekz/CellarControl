@@ -42,6 +42,12 @@ void loop(){
   if(CheckTimer(tmrCommWithServer, 30000L)){
     CommWithServer();
   }
+
+  ProcessReceivedData();
+  while(bridgeSerial.available() > 0){
+    Receive(bridgeSerial.read());
+  }
+
  
 }
 

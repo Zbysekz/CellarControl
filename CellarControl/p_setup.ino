@@ -3,7 +3,7 @@
 void setup(){
 
   Serial.begin(9600);
-  //bridgeSerial.begin(9600);
+  bridgeSerial.begin(9600);
 
   Serial.println(F("Program start"));
 
