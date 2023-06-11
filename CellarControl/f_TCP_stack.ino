@@ -3,6 +3,7 @@ void CommWithServer(){
   uint8_t tx_data[30];
   
   uint8_t ptr = 0;
+  tx_data[ptr++] = DATA_SEND_ID;
   tx_data[ptr++] = ((uint8_t)(paramsValid)<<0) | ((uint8_t)(errorFlags)<<1) | ((uint8_t)(water_pump_alarm)<<2) | ((uint8_t)(fanControl_autMan)<<3) 
                  | ((uint8_t)(fanControl_onOff)<<4) | ((uint8_t)(tempControl_autMan)<<5) |((uint8_t)(tempPump_onOff)<<6) | ((uint8_t)(0)<<7);
 
