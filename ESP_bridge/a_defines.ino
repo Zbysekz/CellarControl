@@ -14,7 +14,7 @@ IPAddress ipServer(192, 168, 0, 3);
 WiFiClient wifiClient;
 
 #define BUFFER_SIZE 50
-long unsigned int tmrSendDataToServer;
+long unsigned int tmrSendDataToServer, tmrCheckForData;
 uint8_t read_buffer[BUFFER_SIZE];
 uint8_t rx, expected_len, buffer_ptr, receive_state;
 

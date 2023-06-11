@@ -45,7 +45,10 @@ void loop(){
 
   ProcessReceivedData();
   while(bridgeSerial.available() > 0){
-    Receive(bridgeSerial.read());
+    Serial.println("Received something");
+    uint8_t x = bridgeSerial.read();
+    Serial.println(x);
+    Receive(x);
   }
 
  

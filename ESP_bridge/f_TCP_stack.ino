@@ -27,17 +27,21 @@ void SendDataToServer(){
           Serial.println("Connection to server failed! IP:"+ipServer.toString());
         } else {
 
-        int cnt = Send(read_buffer,buffer_ptr);
-        if(cnt<=0){
-          Serial.println("Write failed!");
-        }
+          int cnt = Send(read_buffer,buffer_ptr);
+          if(cnt<=0){
+            Serial.println("Write failed!");
+          }
 
-        delay(50);
-        while(wifiClient.available()){
-          uint8_t rcv = wifiClient.read();
-          bridgeSerial.write(rcv);
-        }
-            
+          ResetTimer(tmrCheckForData);
+          while(!CheckTimer(tmrCheckForData, 500UL)){
+            delay(50);
+            while(wifiClient.available()){
+              uint8_t rcv = wifiClient.read();
+              bridgeSerial.write(rcv);  
+              Serial.print("Got from server:");
+              Serial.println(rcv);
+            }
+          }   
         }
         wifiClient.stop();
         Serial.println("Data sent to server!");

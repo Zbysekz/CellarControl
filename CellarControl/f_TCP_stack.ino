@@ -51,6 +51,10 @@ void ProcessReceivedData(uint8_t data[]){
   int res=0;//aux temp
   int len = data[0];
   //uint16_t auxVal = 0;
+  Serial.println("Received data from server!");
+  Serial.println(data[0]);
+  Serial.println(data[1]);
+  Serial.println(data[2]);
   
   switch(data[1]){//by ID
     case 0:
