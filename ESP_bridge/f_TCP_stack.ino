@@ -35,7 +35,7 @@ void SendDataToServer(){
         delay(50);
         while(wifiClient.available()){
           uint8_t rcv = wifiClient.read();
-          Serial.write(rcv);
+          bridgeSerial.write(rcv);
         }
             
         }

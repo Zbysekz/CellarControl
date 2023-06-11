@@ -17,3 +17,5 @@ WiFiClient wifiClient;
 long unsigned int tmrSendDataToServer;
 uint8_t read_buffer[BUFFER_SIZE];
 uint8_t rx, expected_len, buffer_ptr, receive_state;
+
+SoftwareSerial bridgeSerial(D2, D3); // RX, TX

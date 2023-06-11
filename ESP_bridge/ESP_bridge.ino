@@ -3,6 +3,7 @@
 #include <ESPAsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <ArduinoOTA.h>
+#include <SoftwareSerial.h>
 
 #include "credentials/credentials.h" // separate file for credentials
 

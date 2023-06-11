@@ -56,7 +56,7 @@ int gi;//for for loops in switch-case
 #define PUMP_LONG_RUN 3*60000UL
 #define PUMP_PAUSE_TIME 30*60000UL
 
-#define PIN_ONE_WIRE_BUS 2
+#define PIN_ONE_WIRE_BUS 14
 #define PIN_PUMP 9
 #define PIN_FAN 15
 #define PIN_FRIDGE 12
@@ -71,7 +71,7 @@ int gi;//for for loops in switch-case
 
 #define PIN_WATER_LEVEL 16
 #define PIN_FERMENTER_HEATING 17
-#define PIN_BOX_FANS 3
+#define PIN_BOX_FANS 18
 #define PIN_RESERVE 4
 
 

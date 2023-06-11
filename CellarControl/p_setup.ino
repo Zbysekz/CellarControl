@@ -26,8 +26,7 @@ void setup(){
   pinMode(PIN_BOX_FANS, OUTPUT);
   pinMode(PIN_RESERVE, OUTPUT);
   pinMode(PIN_WATER_LEVEL, INPUT_PULLUP);
-
-
+  
   digitalWrite(PIN_PUMP, false);
   digitalWrite(PIN_FAN, false);
   digitalWrite(PIN_FRIDGE, false); 

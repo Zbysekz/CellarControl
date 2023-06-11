@@ -3,8 +3,8 @@ void loop(){
 
   ArduinoOTA.handle();
 
-  while(Serial.available() > 0) {
-    uint8_t rx = Serial.read();
+  while(bridgeSerial.available() > 0) {
+    uint8_t rx = bridgeSerial.read();
     read_buffer[buffer_ptr++] = rx;
     if (buffer_ptr>=BUFFER_SIZE){
       receive_state = 0;
