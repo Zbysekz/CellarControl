@@ -27,11 +27,12 @@ void SendDataToServer(){
           Serial.println("Connection to server failed! IP:"+ipServer.toString());
         } else {
 
-          int cnt = Send(read_buffer,buffer_ptr);
-          if(cnt<=0){
-            Serial.println("Write failed!");
+          if(buffer_ptr > 6){
+            int cnt = Send(read_buffer+3,buffer_ptr-6);
+            if(cnt<=0){
+              Serial.println("Write failed!");
+            }
           }
-
           ResetTimer(tmrCheckForData);
           while(!CheckTimer(tmrCheckForData, 500UL)){
             delay(50);
