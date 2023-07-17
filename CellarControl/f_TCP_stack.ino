@@ -21,6 +21,8 @@ void CommWithServer(){
   tx_data[ptr++] = uint8_t(((uint16_t)(temp_polybox*10))&0xFF);
   tx_data[ptr++] = uint8_t((((uint16_t)(temp_cellar*10))&0xFF00)>>8);
   tx_data[ptr++] = uint8_t(((uint16_t)(temp_cellar*10))&0xFF);
+  tx_data[ptr++] = uint8_t((((uint16_t)(temp_fermentor*10))&0xFF00)>>8);
+  tx_data[ptr++] = uint8_t(((uint16_t)(temp_fermentor*10))&0xFF);
 
   Send(tx_data, ptr);
 }
@@ -74,6 +76,21 @@ void ProcessReceivedData(uint8_t data[]){
     break;
     case 5:
       temp_setpoint = data[2];
+    break; 
+    case 10:
+      digitalWrite(PIN_VALVE_GARDEN1, data[2]!=0);
+    break; 
+    case 11:
+      digitalWrite(PIN_VALVE_GARDEN2, data[2]!=0);
+    break; 
+    case 12:
+      digitalWrite(PIN_VALVE_GARDEN3, data[2]!=0);
+    break; 
+    case 13:
+      digitalWrite(PIN_VALVE_CELLAR1, data[2]!=0);
+    break;
+    case 14:
+      digitalWrite(PIN_VALVE_CELLAR2, data[2]!=0);
     break; 
     case 199://ending packet
       xServerEndPacket = true;

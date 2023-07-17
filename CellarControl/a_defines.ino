@@ -1,6 +1,7 @@
 
-DeviceAddress addrTempSensorCellar = {0x28,0xFF,0x64,0x1E,0x15,0xEA,0x6A,0x9D};
+DeviceAddress addrTempSensorFermentor = {0x28,0xFF,0x64,0x1E,0x15,0xEA,0x6A,0x9D};
 DeviceAddress addrTempSensorPolybox = {0x28,0xFF,0x64,0x1E,0x15,0x13,0x5C,0xD5};
+DeviceAddress addrTempSensorCellar = {0x28,0xFF,0x64,0x1F,0x76,0x7F,0xA5,0xE4};
 
 uFire_SHT20 sht20;
 
@@ -10,7 +11,7 @@ uFire_SHT20 sht20;
 float triplePoint1=0.0, boilingPoint1=98.0, triplePoint2=0.0, boilingPoint2=98.0;
 //temperatures
 float SHT_humidity,SHT_temperature,SHT_dew_point;
-float temp_cellar, temp_polybox;
+float temp_cellar, temp_polybox, temp_fermentor;
 
 //setpoints
 float temp_setpoint;
@@ -62,11 +63,11 @@ int gi;//for for loops in switch-case
 #define PIN_FRIDGE 12
 #define PIN_WATER_PUMP 5
 
-#define PIN_VALVE_GARDEN1 6
-#define PIN_VALVE_GARDEN2 10
-#define PIN_VALVE_GARDEN3 11
+#define PIN_VALVE_GARDEN1 6 // beer cooling
+#define PIN_VALVE_GARDEN2 10 // hops
+#define PIN_VALVE_GARDEN3 11 // tomatos
 
-#define PIN_VALVE_CELLAR1 7
+#define PIN_VALVE_CELLAR1 7  
 #define PIN_VALVE_CELLAR2 8
 
 #define PIN_WATER_LEVEL 16

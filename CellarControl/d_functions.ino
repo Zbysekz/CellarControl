@@ -119,6 +119,10 @@ bool ReadTemperatures(){
   if(res)
     temp_polybox = CalibrateTemp(temp_polybox, triplePoint2, boilingPoint2);
   
+  res = res && ReadTemperature(addrTempSensorFermentor, 1, temp_fermentor);  
+  if(res)
+    temp_polybox = CalibrateTemp(temp_fermentor, triplePoint2, boilingPoint2);
+    
   return res;
 }
 float CalibrateTemp(float raw, float triplePointBath, float boilingPoint){
