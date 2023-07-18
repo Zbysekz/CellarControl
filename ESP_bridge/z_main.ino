@@ -3,6 +3,21 @@ void loop(){
 
   ArduinoOTA.handle();
 
+  timeClient.update();
+
+  Serial.println(timeClient.getFormattedTime());
+  if(timeClient.getMinutes() == 0){
+    if (!minutes_latch){
+      minutes_latch = true;
+      uint8_t data[2];
+      data[0] = 240; // ID of time sync
+      data[1] = timeClient.getHours();
+      SendToArduino(data, 2);
+    }
+  }else{
+    minutes_latch = false;
+  }
+
   while(bridgeSerial.available() > 0) {
     Serial.println("RECEIVING something");
     uint8_t rx = bridgeSerial.read();

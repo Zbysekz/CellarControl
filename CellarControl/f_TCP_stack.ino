@@ -1,32 +1,36 @@
 void CommWithServer(){
 
-  uint8_t tx_data[30];
+  uint8_t tx_data[50];
   
   uint8_t ptr = 0;
   tx_data[ptr++] = DATA_SEND_ID;
   tx_data[ptr++] = ((uint8_t)(paramsValid)<<0) | ((uint8_t)(errorFlags)<<1) | ((uint8_t)(water_pump_alarm)<<2) | ((uint8_t)(fanControl_autMan)<<3) 
-                 | ((uint8_t)(fanControl_onOff)<<4) | ((uint8_t)(tempControl_autMan)<<5) |((uint8_t)(tempPump_onOff)<<6) | ((uint8_t)(0)<<7);
+                 | ((uint8_t)(fan_onOff)<<4) | ((uint8_t)(polybox_autMan)<<5) |((uint8_t)(chillPump_onOff)<<6) | ((uint8_t)(freezer_onOff)<<7);
+  tx_data[ptr++] = ((uint8_t)(fermentor_autMan)<<0) | ((uint8_t)(fermentor_heating_onOff)<<1) | ((uint8_t)(garden1_autMan)<<2) | ((uint8_t)(garden1_onOff)<<3) 
+                 | ((uint8_t)(garden2_autMan)<<4) | ((uint8_t)(garden2_onOff)<<5) |((uint8_t)(garden3_autMan)<<6) | ((uint8_t)(garden3_onOff)<<7);
+  tx_data[ptr++] = ((uint8_t)(valve_cellar1_onOff)<<0) | ((uint8_t)(valve_cellar2_onOff)<<1) | ((uint8_t)(0)<<2) | ((uint8_t)(0)<<3) 
+                 | ((uint8_t)(0)<<4) | ((uint8_t)(0)<<5) |((uint8_t)(0)<<6) | ((uint8_t)(0)<<7);
 
+  Store_TX_float(tx_data, SHT_temperature, ptr);
+  Store_TX_float(tx_data, SHT_humidity, ptr);
+  Store_TX_float(tx_data, SHT_dew_point, ptr);
 
-  tx_data[ptr++] = uint8_t((((uint16_t)(SHT_temperature*10))&0xFF00)>>8);
-  tx_data[ptr++] = uint8_t(((uint16_t)(SHT_temperature*10))&0xFF);
-  tx_data[ptr++] = uint8_t((((uint16_t)(SHT_humidity*10))&0xFF00)>>8);
-  tx_data[ptr++] = uint8_t(((uint16_t)(SHT_humidity*10))&0xFF);
-  tx_data[ptr++] = uint8_t((((uint16_t)(SHT_dew_point*10))&0xFF00)>>8);
-  tx_data[ptr++] = uint8_t(((uint16_t)(SHT_dew_point*10))&0xFF);
- 
-  tx_data[ptr++] = uint8_t((((uint16_t)(temp_setpoint*10))&0xFF00)>>8);
-  tx_data[ptr++] = uint8_t(((uint16_t)(temp_setpoint*10))&0xFF);
-  tx_data[ptr++] = uint8_t((((uint16_t)(temp_polybox*10))&0xFF00)>>8);
-  tx_data[ptr++] = uint8_t(((uint16_t)(temp_polybox*10))&0xFF);
-  tx_data[ptr++] = uint8_t((((uint16_t)(temp_cellar*10))&0xFF00)>>8);
-  tx_data[ptr++] = uint8_t(((uint16_t)(temp_cellar*10))&0xFF);
-  tx_data[ptr++] = uint8_t((((uint16_t)(temp_fermentor*10))&0xFF00)>>8);
-  tx_data[ptr++] = uint8_t(((uint16_t)(temp_fermentor*10))&0xFF);
+  Store_TX_float(tx_data, polybox_setpoint, ptr);
+  Store_TX_float(tx_data, polybox_hysteresis, ptr);
+  Store_TX_float(tx_data, fermentor_setpoint, ptr);
+  Store_TX_float(tx_data, fermentor_hysteresis, ptr);
+
+  Store_TX_float(tx_data, temp_polybox, ptr);
+  Store_TX_float(tx_data, temp_cellar, ptr);
+  Store_TX_float(tx_data, temp_fermentor, ptr);
 
   Send(tx_data, ptr);
 }
 
+void Store_TX_float(uint8_t *arr, float val, uint8_t& ptr){
+  arr[ptr++] = uint8_t((((uint16_t)(val*10))&0xFF00)>>8);
+  arr[ptr++] = uint8_t(((uint16_t)(val*10))&0xFF);
+}
 
 void Send(uint8_t d[],uint8_t d_len){
   uint8_t data[6+d_len];
@@ -60,38 +64,64 @@ void ProcessReceivedData(uint8_t data[]){
   
   switch(data[1]){//by ID
     case 0:
-      tempControl_autMan = data[2];
+      polybox_autMan = data[2];
     break;
     case 1:
       fanControl_autMan = data[2];
     break;
     case 2:
-      tempControl_onOff = data[2];
+      freezer_onOff = data[2];
     break;
     case 3:
-      tempPump_onOff = data[2];
+      chillPump_onOff = data[2];
     break;
     case 4:
-      fanControl_onOff = data[2];
+      fan_onOff = data[2];
     break;
     case 5:
-      temp_setpoint = data[2];
+      polybox_setpoint = data[2];
+      polybox_hysteresis = data[3]/10.0;
     break; 
-    case 10:
-      digitalWrite(PIN_VALVE_GARDEN1, data[2]!=0);
-    break; 
-    case 11:
-      digitalWrite(PIN_VALVE_GARDEN2, data[2]!=0);
-    break; 
-    case 12:
-      digitalWrite(PIN_VALVE_GARDEN3, data[2]!=0);
-    break; 
-    case 13:
-      digitalWrite(PIN_VALVE_CELLAR1, data[2]!=0);
+    case 6:
+      fermentor_autMan = data[2];
     break;
-    case 14:
-      digitalWrite(PIN_VALVE_CELLAR2, data[2]!=0);
+    case 7:
+      fermentor_setpoint = data[2];
+      fermentor_hysteresis = data[3]/10.0;
+    break;
+    case 20:
+      garden1_autMan = data[2];
+    break;
+    case 21:
+      garden2_autMan = data[2];
+    break;
+    case 22:
+      garden3_autMan = data[2];
+    break;
+    case 23:
+      garden1_onOff = data[2];
     break; 
+    case 24:
+      garden2_onOff = data[2];
+    break; 
+    case 25:
+      garden3_onOff = data[2];
+    break; 
+    case 26:
+      valve_cellar1_onOff = data[2];
+    break;
+    case 27:
+      valve_cellar2_onOff = data[2];
+    break; 
+    case 28:
+      garden2_watering_duration = data[2] * 60000UL; // in minutes
+      garden3_watering_duration = data[3] * 60000UL;
+      watering_evening_hour2 = data[4];
+      watering_evening_hour3 = data[5];
+    case 240: // time synchronization
+      time_ntp_hour = data[2];
+      new_ntp_arrived = true;
+    break;
     case 199://ending packet
       xServerEndPacket = true;
     break;
@@ -99,6 +129,8 @@ void ProcessReceivedData(uint8_t data[]){
       Serial.println(F("Not defined command!"));
       
   }
+  if (data[1]!=199 && data[1]!=240)
+    SaveToEEPROM();
 }
 
 void ProcessReceivedData(){

@@ -14,14 +14,26 @@ float SHT_humidity,SHT_temperature,SHT_dew_point;
 float temp_cellar, temp_polybox, temp_fermentor;
 
 //setpoints
-float temp_setpoint;
-float temp_hysteresis = 0.5;
+float polybox_setpoint;
+float polybox_hysteresis = 0.5;
+float fermentor_setpoint;
+float fermentor_hysteresis = 0.5;
 
 //states
-bool tempControl_autMan,tempControl_onOff,tempPump_onOff;
-bool fanControl_autMan,fanControl_onOff;
-bool water_pump_alarm;
+bool polybox_autMan,freezer_onOff,chillPump_onOff;
+bool fermentor_autMan, fermentor_heating_onOff;
+bool fanControl_autMan,fan_onOff;
 
+bool garden1_autMan, garden2_autMan, garden3_autMan;
+bool garden1_onOff, garden2_onOff, garden3_onOff;
+bool valve_cellar1_onOff, valve_cellar2_onOff;
+
+unsigned long garden2_watering_duration, garden2_watering_tmr;
+unsigned long garden3_watering_duration, garden3_watering_tmr;
+uint8_t watering_evening_hour2, watering_evening_hour3;
+
+int time_ntp_hour=-1;
+bool new_ntp_arrived;
 // water pump control
 bool water_pump_out;
 #define WATER_PUMP_MAX_ON_TIME 3*60000UL
@@ -34,9 +46,10 @@ bool water_pump_out;
 unsigned long errorFlags;
 bool paramsValid = false;
 
+bool water_pump_alarm;
 //timers
-unsigned long tmrControlLoop,tmrCommWithServer, tmrFridge, tmrWaterPumpAlarmReset,tmrWaterPumpOnDelay,tmrWaterPumpOnTime,tmrWaterPumpOffDelay;
-int fridgeCooled;
+unsigned long tmrControlLoop,tmrCommWithServer, tmrFreezer, tmrWaterPumpAlarmReset,tmrWaterPumpOnDelay,tmrWaterPumpOnTime,tmrWaterPumpOffDelay;
+int freezerCooled;
 unsigned long tmrPumpPause, tmrPumpLongRun;
 bool pump_paused;
 
@@ -60,7 +73,7 @@ int gi;//for for loops in switch-case
 #define PIN_ONE_WIRE_BUS 14
 #define PIN_PUMP 9
 #define PIN_FAN 15
-#define PIN_FRIDGE 12
+#define PIN_FREEZER 12
 #define PIN_WATER_PUMP 5
 
 #define PIN_VALVE_GARDEN1 6 // beer cooling
@@ -78,6 +91,8 @@ int gi;//for for loops in switch-case
 
 #define ERROR_TEMP 0
 #define ERROR_SHT20 1
+
+ #define EEPROM_ARR_LEN 10
 
 // Setup a oneWire instance to communicate with any OneWire devices
 OneWire oneWire(PIN_ONE_WIRE_BUS);

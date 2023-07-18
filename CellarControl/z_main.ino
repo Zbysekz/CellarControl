@@ -33,7 +33,8 @@ void loop(){
       }
       ControlWaterPump();
       ControlFan();
-      ControlPolybox();
+      ControlPolyboxAndFermentor();
+      ControlGarden();
         
     }
 

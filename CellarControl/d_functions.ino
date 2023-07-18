@@ -29,15 +29,24 @@ String formatVal(float val, int minWidth, int precision){
    return str;
 }
 
-void StoreValue(uint8_t *arr, float val, uint8_t &ptr){
+void StoreValuef(uint8_t *arr, float val, uint8_t &ptr){
    arr[ptr++] = (int)(val*10)/256;
    arr[ptr++] = (int)(val*10)%256;
 }
 
-uint8_t ReadValue(uint8_t *arr, uint8_t &ptr){
-  uint8_t result = (arr[ptr]*256 + arr[ptr+1])/10.0;
+float ReadValuef(uint8_t *arr, uint8_t &ptr){
+  float result = (arr[ptr]*256 + arr[ptr+1])/10.0;
   arr+=2;
   return result;
+}
+uint16_t ReadValue(uint8_t *arr, uint8_t &ptr){
+  uint16_t result = (arr[ptr]*256 + arr[ptr+1]);
+  arr+=2;
+  return result;
+}
+void StoreValue(uint8_t *arr, uint16_t val, uint8_t &ptr){
+   arr[ptr++] = val/256;
+   arr[ptr++] = val%256;
 }
 
 //calculation of CRC16, corresponds to CRC-16/XMODEM on https://crccalc.com/﻿

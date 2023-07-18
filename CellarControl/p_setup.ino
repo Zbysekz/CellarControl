@@ -15,7 +15,7 @@ void setup(){
 
   pinMode(PIN_PUMP, OUTPUT);
   pinMode(PIN_FAN, OUTPUT);
-  pinMode(PIN_FRIDGE, OUTPUT);
+  pinMode(PIN_FREEZER, OUTPUT);
   pinMode(PIN_WATER_PUMP, OUTPUT);
   pinMode(PIN_VALVE_GARDEN1, OUTPUT);
   pinMode(PIN_VALVE_GARDEN2, OUTPUT);
@@ -29,7 +29,7 @@ void setup(){
   
   digitalWrite(PIN_PUMP, false);
   digitalWrite(PIN_FAN, false);
-  digitalWrite(PIN_FRIDGE, false); 
+  digitalWrite(PIN_FREEZER, false); 
   digitalWrite(PIN_WATER_PUMP, false);
   digitalWrite(PIN_VALVE_GARDEN1, false);
   digitalWrite(PIN_VALVE_GARDEN2, false);
@@ -40,20 +40,36 @@ void setup(){
   digitalWrite(PIN_BOX_FANS, false);
   digitalWrite(PIN_RESERVE, false);
 
-  //WIFI
-
-  #define ARR_LEN 8*2
-  uint8_t bytes[ARR_LEN];
+  uint8_t bytes[EEPROM_ARR_LEN];
   
-  if(ReadFromEEPROM(bytes, ARR_LEN)){
+  if(ReadFromEEPROM(bytes, EEPROM_ARR_LEN)){
     uint8_t ptr = 0;
-    temp_setpoint = ReadValue(bytes, ptr);
+
     uint16_t bits = ReadValue(bytes, ptr);
 
-    tempControl_autMan = bits&(1<<0);
-    tempControl_onOff = bits&(1<<1);
-    fanControl_autMan = bits&(1<<2);
-    fanControl_onOff = bits&(1<<3);
+    polybox_autMan = bits&(1<<0);
+    fanControl_autMan = bits&(1<<1);
+    fan_onOff = bits&(1<<2);
+    fanControl_autMan = bits&(1<<3);
+    freezer_onOff = bits&(1<<4);
+    chillPump_onOff = bits&(1<<5);
+    fermentor_autMan = bits&(1<<6);
+    fermentor_heating_onOff = bits&(1<<7);
+    garden1_autMan = bits&(1<<8);
+    garden2_autMan = bits&(1<<9);
+    garden3_autMan = bits&(1<<10);
+    garden1_onOff = bits&(1<<11);
+    garden2_onOff = bits&(1<<12);
+    garden3_onOff = bits&(1<<13);
+    valve_cellar1_onOff = bits&(1<<14);
+    valve_cellar2_onOff = bits&(1<<15);
+
+    polybox_setpoint = ReadValuef(bytes, ptr);
+    polybox_hysteresis = ReadValuef(bytes, ptr);
+    fermentor_setpoint = ReadValuef(bytes, ptr);
+    fermentor_hysteresis = ReadValuef(bytes, ptr);
+    
+
     
     paramsValid = true;
   }else{
@@ -61,11 +77,10 @@ void setup(){
     paramsValid = false;
   }
 
-  fridgeCooled = 0;
+  freezerCooled = 0;
 
   water_pump_out=false;
   
-
   /*digitalWrite(LED_BUILTIN, false);
   delay(300);
   digitalWrite(LED_BUILTIN, true);
@@ -77,4 +92,27 @@ void setup(){
   OneWireDevicesPrintAddr(); // to find address of dallas temperature sensors
 
   Serial.println(F("Setup finished"));
+}
+
+void SaveToEEPROM(){
+  
+  uint8_t bytes[EEPROM_ARR_LEN];
+  uint8_t ptr = 0;
+
+  bytes[ptr++] = ((uint8_t)(polybox_autMan)<<0) | ((uint8_t)(fanControl_autMan)<<1) | ((uint8_t)(fan_onOff)<<2) | ((uint8_t)(fanControl_autMan)<<3) |
+                  ((uint8_t)(freezer_onOff)<<4) | ((uint8_t)(chillPump_onOff)<<5) | ((uint8_t)(fermentor_autMan)<<6) | ((uint8_t)(fermentor_heating_onOff)<<7);
+  bytes[ptr++] = ((uint8_t)(garden1_autMan)<<0) | ((uint8_t)(garden2_autMan)<<1) | ((uint8_t)(garden3_autMan)<<2) | ((uint8_t)(garden1_onOff)<<3) |
+                  ((uint8_t)(garden2_onOff)<<4) | ((uint8_t)(garden3_onOff)<<5) | ((uint8_t)(valve_cellar1_onOff)<<6) | ((uint8_t)(valve_cellar2_onOff)<<7);
+
+  StoreValuef(bytes, polybox_setpoint, ptr);
+  StoreValuef(bytes, polybox_hysteresis, ptr);
+  StoreValuef(bytes, polybox_setpoint, ptr);
+  StoreValuef(bytes, fermentor_hysteresis, ptr);
+
+  unsigned long garden2_watering_duration, garden2_watering_tmr;
+unsigned long garden3_watering_duration, garden3_watering_tmr;
+uint8_t watering_evening_hour2, watering_evening_hour3;
+
+  
+  WriteToEEPROM(bytes, EEPROM_ARR_LEN);
 }

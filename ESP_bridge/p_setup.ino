@@ -8,7 +8,6 @@ void ICACHE_FLASH_ATTR setup(){
   Serial.println(F("Program start"));
   
   //WIFI
-  
   WiFi.mode(WIFI_STA);
   WiFi.config(ip, gateway, subnet);   
 
@@ -30,6 +29,8 @@ void ICACHE_FLASH_ATTR setup(){
   delay(300);
   digitalWrite(LED_BUILTIN, true);
   
+  timeClient.begin();
+
   Serial.println(F("Setup finished"));
 
   buffer_ptr = 0;
