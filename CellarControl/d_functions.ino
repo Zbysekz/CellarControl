@@ -39,6 +39,11 @@ float ReadValuef(uint8_t *arr, uint8_t &ptr){
   arr+=2;
   return result;
 }
+uint32_t ReadValuel(uint8_t *arr, uint8_t &ptr){
+  uint32_t result = (arr[ptr]*16777216UL + arr[ptr+1]*65536UL + arr[ptr+2]*256 + arr[ptr+3]);
+  arr+=4;
+  return result;
+}
 uint16_t ReadValue(uint8_t *arr, uint8_t &ptr){
   uint16_t result = (arr[ptr]*256 + arr[ptr+1]);
   arr+=2;
@@ -47,6 +52,12 @@ uint16_t ReadValue(uint8_t *arr, uint8_t &ptr){
 void StoreValue(uint8_t *arr, uint16_t val, uint8_t &ptr){
    arr[ptr++] = val/256;
    arr[ptr++] = val%256;
+}
+void StoreValuel(uint8_t *arr, uint32_t val, uint8_t &ptr){
+   arr[ptr++] = (uint8_t)((val&0xFF000000)>>24);
+   arr[ptr++] = (uint8_t)((val&0xFF0000)>>16);
+   arr[ptr++] = (uint8_t)((val&0xFF00)>>8);
+   arr[ptr++] = (uint8_t)(val%256);
 }
 
 //calculation of CRC16, corresponds to CRC-16/XMODEM on https://crccalc.com/﻿

@@ -30,6 +30,7 @@ bool valve_cellar1_onOff, valve_cellar2_onOff;
 
 unsigned long garden2_watering_duration, garden2_watering_tmr;
 unsigned long garden3_watering_duration, garden3_watering_tmr;
+uint8_t watering_morning_hour2, watering_morning_hour3;
 uint8_t watering_evening_hour2, watering_evening_hour3;
 
 int time_ntp_hour=-1;
