@@ -24,6 +24,14 @@ void CommWithServer(){
   Store_TX_float(tx_data, temp_cellar, ptr);
   Store_TX_float(tx_data, temp_fermentor, ptr);
 
+  Serial.print("poly:");
+  Serial.println(temp_polybox);
+  Serial.print("cellar:");
+  Serial.println(temp_cellar);
+  Serial.print("fermentor:");
+  Serial.println(temp_fermentor);
+  
+
   Send(tx_data, ptr);
 }
 

@@ -96,6 +96,10 @@ void setup(){
   OneWireDevicesPrintAddr(); // to find address of dallas temperature sensors
 
   Serial.println(F("Setup finished"));
+
+  polybox_autMan = 1;
+  polybox_setpoint = 2;
+  SaveToEEPROM();
 }
 
 void SaveToEEPROM(){
@@ -110,7 +114,7 @@ void SaveToEEPROM(){
 
   StoreValuef(bytes, polybox_setpoint, ptr);
   StoreValuef(bytes, polybox_hysteresis, ptr);
-  StoreValuef(bytes, polybox_setpoint, ptr);
+  StoreValuef(bytes, fermentor_setpoint, ptr);
   StoreValuef(bytes, fermentor_hysteresis, ptr);
   StoreValuel(bytes, garden2_watering_duration, ptr);
   StoreValuel(bytes, garden3_watering_duration, ptr);
@@ -119,6 +123,6 @@ void SaveToEEPROM(){
   bytes[ptr++] = watering_evening_hour2;
   bytes[ptr++] = watering_evening_hour3;
   
-  
-  WriteToEEPROM(bytes, EEPROM_ARR_LEN);
+  if(ptr!=EEPROM_ARR_LEN)
+    Serial.print("Write param size vs defined MISMATCH!!!!");
 }

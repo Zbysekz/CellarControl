@@ -26,7 +26,7 @@ void loop(){
       
       
       if((errorFlags & (1UL << ERROR_TEMP))==0){
-          Serial.println(temp_cellar);          
+      ;//Serial.println(temp_cellar);          
           //    digitalWrite(PIN_FERMENTER_HEATING, temp_cellar < 0);
       }else{
         digitalWrite(PIN_FERMENTER_HEATING,false);
@@ -35,7 +35,9 @@ void loop(){
       ControlFan();
       ControlPolyboxAndFermentor();
       ControlGarden();
-        
+      Serial.print("polysetpoint:");
+      Serial.println(polybox_setpoint);
+      Serial.println(polybox_autMan);
     }
 
   }
@@ -46,12 +48,11 @@ void loop(){
 
   ProcessReceivedData();
   while(bridgeSerial.available() > 0){
-    //Serial.println("Received something");
+    Serial.print(".");
     uint8_t x = bridgeSerial.read();
     //Serial.println(x);
     Receive(x);
   }
-
  
 }
 

@@ -141,7 +141,7 @@ bool ReadTemperatures(){
   
   res = res && ReadTemperature(addrTempSensorFermentor, 1, temp_fermentor);  
   if(res)
-    temp_polybox = CalibrateTemp(temp_fermentor, triplePoint2, boilingPoint2);
+    temp_fermentor = CalibrateTemp(temp_fermentor, triplePoint3, boilingPoint3);
     
   return res;
 }

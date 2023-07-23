@@ -8,7 +8,8 @@ uFire_SHT20 sht20;
 #define EEADDR_START 0
 
 //parameters
-float triplePoint1=0.0, boilingPoint1=98.0, triplePoint2=0.0, boilingPoint2=98.0;
+float triplePoint1=0.0, boilingPoint1=98.0, triplePoint2=0.0, boilingPoint2=98.0,
+triplePoint3=0.0, boilingPoint3=98.0;
 //temperatures
 float SHT_humidity,SHT_temperature,SHT_dew_point;
 float temp_cellar, temp_polybox, temp_fermentor;
@@ -68,7 +69,7 @@ int gi;//for for loops in switch-case
 
 #define DATA_SEND_ID 109
 
-#define PUMP_LONG_RUN 3*60000UL
+#define PUMP_LONG_RUN 10*60000UL
 #define PUMP_PAUSE_TIME 30*60000UL
 
 #define PIN_ONE_WIRE_BUS 14
@@ -93,7 +94,7 @@ int gi;//for for loops in switch-case
 #define ERROR_TEMP 0
 #define ERROR_SHT20 1
 
- #define EEPROM_ARR_LEN 10
+ #define EEPROM_ARR_LEN 22
 
 // Setup a oneWire instance to communicate with any OneWire devices
 OneWire oneWire(PIN_ONE_WIRE_BUS);
