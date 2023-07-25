@@ -63,18 +63,18 @@ void ControlPolyboxAndFermentor(){
   if(polybox_autMan){
     if((errorFlags & (1UL << ERROR_TEMP))==0){
       if(temp_polybox > polybox_setpoint + polybox_hysteresis){
-          chillPump_onOff = true;
+          chillPump_req = true;
       }
       if(temp_polybox < polybox_setpoint - polybox_hysteresis){
-          chillPump_onOff = false;
+          chillPump_req = false;
       }      
     }else{
-      chillPump_onOff = false;
+      chillPump_req = false;
     }
   }
   
  
-  if (!chillPump_onOff){
+  if (!chillPump_req){
     ResetTimer(tmrPumpLongRun);
     pump_paused = false; 
   }
@@ -88,6 +88,7 @@ void ControlPolyboxAndFermentor(){
     ResetTimer(tmrPumpLongRun);
   }
 
+  chillPump_onOff = chillPump_req && !pump_paused;
 
 
   if(fermentor_autMan){
@@ -95,8 +96,8 @@ void ControlPolyboxAndFermentor(){
   }
 
   digitalWrite(PIN_FREEZER, freezer_onOff);
-  digitalWrite(PIN_PUMP, chillPump_onOff && !pump_paused);
-  digitalWrite(PIN_BOX_FANS, chillPump_onOff && !pump_paused);
+  digitalWrite(PIN_PUMP, chillPump_onOff);
+  digitalWrite(PIN_BOX_FANS, chillPump_onOff);
 
   /*
   if(CheckTimer(tmrFreefer,60000L)){//every minute increase / decrease variable

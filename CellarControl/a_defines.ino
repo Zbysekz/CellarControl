@@ -34,6 +34,8 @@ unsigned long garden3_watering_duration, garden3_watering_tmr;
 uint8_t watering_morning_hour2, watering_morning_hour3;
 uint8_t watering_evening_hour2, watering_evening_hour3;
 
+bool chillPump_req;
+
 int time_ntp_hour=-1;
 bool new_ntp_arrived;
 // water pump control
