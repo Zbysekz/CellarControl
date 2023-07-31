@@ -21,31 +21,35 @@ void ConnectToWifi(){
     }
     Serial.println(F("Connected!"));   
 }
-void SendDataToServer(){
+void CommWithServer(bool dataForServerReady){
 //vytvorime spojeni, posleme data a precteme jestli nejaka neprisla, pak zavreme spojeni
     if (!wifiClient.connect(ipServer, 23)) {
           Serial.println("Connection to server failed! IP:"+ipServer.toString());
         } else {
 
-          if(buffer_ptr > 6){
-            int cnt = SendToServer(read_buffer+3,buffer_ptr-6);
-            if(cnt<=0){
-              Serial.println("Write failed!");
+          if(dataForServerReady){
+            if(buffer_ptr > 6){
+              int cnt = SendToServer(read_buffer+3,buffer_ptr-6);
+              if(cnt<=0){
+                Serial.println("Write failed!");
+              }
             }
           }
           ResetTimer(tmrCheckForData);
-          while(!CheckTimer(tmrCheckForData, 500UL)){
-            delay(50);
+          Serial.print("Got from server:");
+          while(!CheckTimer(tmrCheckForData, 1000UL)){
+            delay(100);
             while(wifiClient.available()){
               uint8_t rcv = wifiClient.read();
               bridgeSerial.write(rcv);  
-              Serial.print("Got from server:");
-              Serial.println(rcv);
+              Serial.print(rcv);
+              ResetTimer(tmrCheckForData);
             }
           }   
+          Serial.println("end.");
         }
         wifiClient.stop();
-        Serial.println("Data sent to server!");
+        //Serial.println("Data sent to server!");
 }
 
 

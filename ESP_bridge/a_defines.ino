@@ -20,11 +20,5 @@ uint8_t rx, expected_len, buffer_ptr, receive_state;
 bool minutes_latch;
 SoftwareSerial bridgeSerial(D2, D3); // RX, TX
 
-WiFiUDP ntpUDP;
-// By default 'pool.ntp.org' is used with 60 seconds update interval and
-// no offset
-NTPClient timeClient(ntpUDP);
-
-// You can specify the time server pool and the offset, (in seconds)
-// additionally you can specify the update interval (in milliseconds).
-// NTPClient timeClient(ntpUDP, "europe.pool.ntp.org", 3600, 60000);
+WiFiUDP wifiUdp;
+NTP ntp(wifiUdp);

@@ -3,10 +3,7 @@ void loop(){
 
   ArduinoOTA.handle();
 
-  timeClient.update();
-
-  Serial.println(timeClient.getFormattedTime());
-  if(timeClient.getMinutes() == 0){
+  /*if(timeClient.getMinutes() == 0){
     if (!minutes_latch){
       minutes_latch = true;
       uint8_t data[2];
@@ -16,14 +13,20 @@ void loop(){
     }
   }else{
     minutes_latch = false;
+  }*/
+  ntp.update();
+  if (CheckTimer(tmrSendDataToServer, 15000UL)){
+      CommWithServer(false);
+      Serial.println(ntp.formattedTime("%d. %B %Y")); // dd. Mmm yyyy
+      Serial.println(ntp.formattedTime("%A %T")); // Www hh:mm:ss
   }
-
+  if(bridgeSerial.available()>0)
+    Serial.println("RECEIVING from arduino");
   while(bridgeSerial.available() > 0) {
-    Serial.println("RECEIVING something");
     uint8_t rx = bridgeSerial.read();
-    Serial.println(rx);
-    Serial.print("state:");
-    Serial.println(receive_state);
+    Serial.print(rx);
+    Serial.print(";");
+    
     read_buffer[buffer_ptr++] = rx;
     if (buffer_ptr>=BUFFER_SIZE){
       receive_state = 0;
@@ -54,7 +57,8 @@ void loop(){
         if(buffer_ptr-1 == expected_len){
           if(rx == 222){
               Serial.println("completed, going to send it to server");
-              SendDataToServer();
+              CommWithServer(true);
+              ResetTimer(tmrSendDataToServer);
               receive_state=0;
               buffer_ptr = 0;
           }else{

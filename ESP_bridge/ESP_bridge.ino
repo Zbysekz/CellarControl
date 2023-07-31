@@ -4,7 +4,7 @@
 #include <ESPAsyncWebServer.h>
 #include <ArduinoOTA.h>
 #include <SoftwareSerial.h>
-#include <NTPClient.h> // NTP client by Fabrice Weinberg
+#include "NTP.h"
 #include <WiFiUdp.h>
 
 #include "credentials/credentials.h" // separate file for credentials

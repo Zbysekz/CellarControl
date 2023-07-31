@@ -29,7 +29,10 @@ void ICACHE_FLASH_ATTR setup(){
   delay(300);
   digitalWrite(LED_BUILTIN, true);
   
-  timeClient.begin();
+  ntp.ruleDST("CEST", Last, Sun, Mar, 2, 120); // last sunday in march 2:00, timetone +120min (+1 GMT + 1h summertime offset)
+  ntp.ruleSTD("CET", Last, Sun, Oct, 3, 60); // last sunday in october 3:00, timezone +60min (+1 GMT)
+  ntp.begin();
+  Serial.println("start NTP");
 
   Serial.println(F("Setup finished"));
 
