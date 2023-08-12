@@ -59,20 +59,47 @@ void ControlFan(){
 }
 
 void ControlPolyboxAndFermentor(){
-  // ------- TEMP CONTROL
+  // ------- TEMP CONTROL OF POLYBOX
   if(polybox_autMan){
     if((errorFlags & (1UL << ERROR_TEMP))==0){
       if(temp_polybox > polybox_setpoint + polybox_hysteresis){
-          chillPump_req = true;
+          polybox_cool_req = true;
       }
       if(temp_polybox < polybox_setpoint - polybox_hysteresis){
-          chillPump_req = false;
+          polybox_cool_req = false;
       }      
     }else{
-      chillPump_req = false;
+      polybox_cool_req = false;
     }
-  }
-  
+  }else polybox_cool_req = false;
+  // ------- TEMP CONTROL OF FERMENTOR
+  if(fermentor_autMan){
+    if((errorFlags & (1UL << ERROR_TEMP))==0){
+      if(temp_fermentor > fermentor_setpoint + fermentor_hysteresis){
+          fermentor_cool_req = true;
+      }
+      if(temp_fermentor < fermentor_setpoint - fermentor_hysteresis){
+          fermentor_cool_req = false;
+      }      
+    }else{
+      fermentor_cool_req = false;
+    }
+  }else fermentor_cool_req = false;
+
+  if (fermentor_cool_req || polybox_cool_req){
+      chillPump_onOff = true; 
+      if(fermentor_cool_req){
+        valve_cellar1_onOff = true;
+        valve_cellar2_onOff = false; 
+      }else{
+        valve_cellar1_onOff = false;
+        valve_cellar2_onOff = true;
+      }
+  }else{
+    chillPump_onOff = false;
+    valve_cellar1_onOff = false;
+    valve_cellar2_onOff = false;
+    }
  
   if (!chillPump_req){
     ResetTimer(tmrPumpLongRun);
@@ -88,16 +115,9 @@ void ControlPolyboxAndFermentor(){
     ResetTimer(tmrPumpLongRun);
   }
 
-  chillPump_onOff = chillPump_req && !pump_paused;
-
-
-  if(fermentor_autMan){
-
-  }
-
   digitalWrite(PIN_FREEZER, freezer_onOff);
-  digitalWrite(PIN_PUMP, chillPump_onOff);
-  digitalWrite(PIN_BOX_FANS, chillPump_onOff);
+  digitalWrite(PIN_PUMP, chillPump_onOff && !pump_paused);
+  digitalWrite(PIN_BOX_FANS, chillPump_onOff && !pump_paused && !fermentor_cool_req);
 
   /*
   if(CheckTimer(tmrFreefer,60000L)){//every minute increase / decrease variable

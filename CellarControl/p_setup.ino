@@ -74,7 +74,8 @@ void setup(){
     watering_morning_hour3 = bytes[ptr++];
     watering_evening_hour2 = bytes[ptr++];
     watering_evening_hour3 = bytes[ptr++];
-    
+    Serial.println("Read len:");
+    Serial.println(ptr);
     paramsValid = true;
   }else{
     Serial.println("Not valid EEPROM data!");
@@ -82,7 +83,8 @@ void setup(){
   }
 
   freezerCooled = 0;
-
+  Serial.print("Loaded poly sp:");
+  Serial.println(polybox_setpoint);
   water_pump_out=false;
   
   /*digitalWrite(LED_BUILTIN, false);
@@ -94,10 +96,6 @@ void setup(){
   //sht20.begin();
 
   OneWireDevicesPrintAddr(); // to find address of dallas temperature sensors
-
-  polybox_autMan = 1;
-  polybox_setpoint = 2;
-  SaveToEEPROM();
 
   reqClock = true;
   Serial.println(F("Setup finished"));
@@ -123,7 +121,10 @@ void SaveToEEPROM(){
   bytes[ptr++] = watering_morning_hour3;
   bytes[ptr++] = watering_evening_hour2;
   bytes[ptr++] = watering_evening_hour3;
-  
+  Serial.println("stored len:");
+  Serial.println(ptr);
   if(ptr!=EEPROM_ARR_LEN)
     Serial.print("Write param size vs defined MISMATCH!!!!");
+
+  WriteToEEPROM(bytes, EEPROM_ARR_LEN);
 }
