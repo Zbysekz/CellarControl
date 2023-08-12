@@ -36,17 +36,17 @@ void StoreValuef(uint8_t *arr, float val, uint8_t &ptr){
 
 float ReadValuef(uint8_t *arr, uint8_t &ptr){
   float result = (arr[ptr]*256 + arr[ptr+1])/10.0;
-  arr+=2;
+  ptr+=2;
   return result;
 }
 uint32_t ReadValuel(uint8_t *arr, uint8_t &ptr){
   uint32_t result = (arr[ptr]*16777216UL + arr[ptr+1]*65536UL + arr[ptr+2]*256 + arr[ptr+3]);
-  arr+=4;
+  ptr+=4;
   return result;
 }
 uint16_t ReadValue(uint8_t *arr, uint8_t &ptr){
   uint16_t result = (arr[ptr]*256 + arr[ptr+1]);
-  arr+=2;
+  ptr+=2;
   return result;
 }
 void StoreValue(uint8_t *arr, uint16_t val, uint8_t &ptr){
@@ -159,7 +159,8 @@ void WriteToEEPROM(uint8_t bytes[], int len){
   for(int i=0;i<len;i++){
      EEPROM.write(addr++, bytes[i]);
   }
-  int crc = CRC16(bytes, len);
+  uint16_t crc = CRC16(bytes, len);
+  
   EEPROM.write(addr++, crc/256);
   EEPROM.write(addr++, crc%256); 
 }
@@ -170,8 +171,7 @@ bool ReadFromEEPROM(uint8_t* bytes, int len){
   for(int i=0;i<len;i++){
      bytes[i] = EEPROM.read(addr++);
   }
-  int crcReal = CRC16(bytes, len);
-  int crcStored = EEPROM.read(addr)*256 + EEPROM.read(addr+1);
-  addr += 2;
+  uint16_t crcReal = CRC16(bytes, len);
+  uint16_t crcStored = EEPROM.read(addr)*256 + EEPROM.read(addr+1);
   return (crcReal == crcStored);
 }

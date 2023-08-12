@@ -3,8 +3,6 @@ DeviceAddress addrTempSensorFermentor = {0x28,0xFF,0x64,0x1E,0x15,0xEA,0x6A,0x9D
 DeviceAddress addrTempSensorPolybox = {0x28,0xFF,0x64,0x1E,0x15,0x13,0x5C,0xD5};
 DeviceAddress addrTempSensorCellar = {0x28,0xFF,0x64,0x1F,0x76,0x7F,0xA5,0xE4};
 
-uFire_SHT20 sht20;
-
 #define EEADDR_START 0
 
 //parameters
@@ -33,6 +31,9 @@ unsigned long garden2_watering_duration, garden2_watering_tmr;
 unsigned long garden3_watering_duration, garden3_watering_tmr;
 uint8_t watering_morning_hour2, watering_morning_hour3;
 uint8_t watering_evening_hour2, watering_evening_hour3;
+
+// aux vars
+bool fermentor_cool_req, polybox_cool_req;
 
 int time_ntp_hour=-1;
 bool new_ntp_arrived;

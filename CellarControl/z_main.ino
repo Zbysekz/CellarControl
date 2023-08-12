@@ -3,7 +3,6 @@ void loop(){
   if(paramsValid){
 
     if(CheckTimer(tmrControlLoop, 5000L)){
-
       /*if (!sht20.connected()){
         errorFlags |= 1UL << ERROR_SHT20;
         Serial.println("Not connected!!");
@@ -35,9 +34,12 @@ void loop(){
       ControlFan();
       ControlPolyboxAndFermentor();
       ControlGarden();
-      Serial.print("polysetpoint:");
+      Serial.print("poly:");
       Serial.println(polybox_setpoint);
-      Serial.println(polybox_autMan);
+      Serial.println(temp_polybox);
+      Serial.print("ferm:");
+      Serial.println(fermentor_setpoint);
+      Serial.println(temp_fermentor);
     }
 
   }

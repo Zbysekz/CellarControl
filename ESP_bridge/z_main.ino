@@ -5,7 +5,7 @@ void loop(){
 
   timeClient.update();
 
-  Serial.println(timeClient.getFormattedTime());
+  //Serial.println(timeClient.getFormattedTime());
   if(timeClient.getMinutes() == 0){
     if (!minutes_latch){
       minutes_latch = true;
