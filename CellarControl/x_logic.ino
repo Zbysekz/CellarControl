@@ -99,12 +99,10 @@ void ControlPolyboxAndFermentor(){
     chillPump_onOff = false;
     valve_cellar1_onOff = false;
     valve_cellar2_onOff = false;
-    }
- 
-  if (!chillPump_req){
     ResetTimer(tmrPumpLongRun);
     pump_paused = false; 
   }
+ 
   if(!pump_paused && CheckTimer(tmrPumpLongRun, PUMP_LONG_RUN)){
     ResetTimer(tmrPumpLongRun);
     ResetTimer(tmrPumpPause);
@@ -120,7 +118,7 @@ void ControlPolyboxAndFermentor(){
   digitalWrite(PIN_BOX_FANS, chillPump_onOff && !pump_paused && !fermentor_cool_req);
 
   /*
-  if(CheckTimer(tmrFreefer,60000L)){//every minute increase / decrease variable
+  if(CheckTimer(tmrFreezer,60000L)){//every minute increase / decrease variable
     if(tempControl_onOff){
       if (fridgeCooled < 120) fridgeCooled ++;
     }else{

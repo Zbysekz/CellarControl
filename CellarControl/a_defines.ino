@@ -27,6 +27,8 @@ bool garden1_autMan, garden2_autMan, garden3_autMan;
 bool garden1_onOff, garden2_onOff, garden3_onOff;
 bool valve_cellar1_onOff, valve_cellar2_onOff;
 
+bool reqClock,clock_valid;
+uint8_t clock_h, clock_min;
 unsigned long tmrReqClock, tmrClock;
 unsigned long garden2_watering_duration, garden2_watering_tmr;
 unsigned long garden3_watering_duration, garden3_watering_tmr;
@@ -36,8 +38,6 @@ uint8_t watering_evening_hour2, watering_evening_hour3;
 // aux vars
 bool fermentor_cool_req, polybox_cool_req;
 
-int time_ntp_hour=-1;
-bool new_ntp_arrived;
 // water pump control
 bool water_pump_out;
 #define WATER_PUMP_MAX_ON_TIME 3*60000UL
