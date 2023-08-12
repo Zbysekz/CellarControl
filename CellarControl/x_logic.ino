@@ -115,16 +115,15 @@ void ControlPolyboxAndFermentor(){
 void ControlGarden(){
   
   //start of watering
-  if(new_ntp_arrived){
-    new_ntp_arrived = false;
-    if(time_ntp_hour==watering_morning_hour2 || time_ntp_hour==watering_evening_hour2){
+  if(clock_valid){
+    if((clock_h==watering_morning_hour2 || clock_h==watering_evening_hour2)&&clock_min == 0){
         if(garden2_autMan){
             garden2_onOff = true;
             garden2_watering_tmr = millis();
         }
     }
 
-    if(time_ntp_hour==watering_morning_hour3 || time_ntp_hour==watering_evening_hour3){
+    if((clock_h==watering_morning_hour3 || clock_h==watering_evening_hour3)&&clock_min == 30){
         if(garden3_autMan){
             garden3_onOff = true;
             garden3_watering_tmr = millis();
@@ -148,4 +147,17 @@ void ControlGarden(){
   digitalWrite(PIN_VALVE_GARDEN1, garden1_onOff);
   digitalWrite(PIN_VALVE_GARDEN2, garden2_onOff);
   digitalWrite(PIN_VALVE_GARDEN3, garden3_onOff);
+
+  if(CheckTimer(tmrReqClock, 6*60*60000L)){ // 6 hours
+      reqClock = true;
+    }
+    if(CheckTimer(tmrClock, 60000L)){
+      if(clock_valid){
+        if(++clock_min >= 60){
+          clock_min = 0;
+          if(++clock_h >=24)
+            clock_h = 0;
+        }
+      }
+    }
 }

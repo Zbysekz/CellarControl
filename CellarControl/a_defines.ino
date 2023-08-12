@@ -29,6 +29,7 @@ bool garden1_autMan, garden2_autMan, garden3_autMan;
 bool garden1_onOff, garden2_onOff, garden3_onOff;
 bool valve_cellar1_onOff, valve_cellar2_onOff;
 
+unsigned long tmrReqClock, tmrClock;
 unsigned long garden2_watering_duration, garden2_watering_tmr;
 unsigned long garden3_watering_duration, garden3_watering_tmr;
 uint8_t watering_morning_hour2, watering_morning_hour3;

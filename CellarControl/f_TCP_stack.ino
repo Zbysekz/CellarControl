@@ -8,7 +8,7 @@ void CommWithServer(){
                  | ((uint8_t)(fan_onOff)<<4) | ((uint8_t)(polybox_autMan)<<5) |((uint8_t)(chillPump_onOff)<<6) | ((uint8_t)(freezer_onOff)<<7);
   tx_data[ptr++] = ((uint8_t)(fermentor_autMan)<<0) | ((uint8_t)(fermentor_heating_onOff)<<1) | ((uint8_t)(garden1_autMan)<<2) | ((uint8_t)(garden1_onOff)<<3) 
                  | ((uint8_t)(garden2_autMan)<<4) | ((uint8_t)(garden2_onOff)<<5) |((uint8_t)(garden3_autMan)<<6) | ((uint8_t)(garden3_onOff)<<7);
-  tx_data[ptr++] = ((uint8_t)(valve_cellar1_onOff)<<0) | ((uint8_t)(valve_cellar2_onOff)<<1) | ((uint8_t)(0)<<2) | ((uint8_t)(0)<<3) 
+  tx_data[ptr++] = ((uint8_t)(valve_cellar1_onOff)<<0) | ((uint8_t)(valve_cellar2_onOff)<<1) | ((uint8_t)(reqClock)<<2) | ((uint8_t)(0)<<3) 
                  | ((uint8_t)(0)<<4) | ((uint8_t)(0)<<5) |((uint8_t)(0)<<6) | ((uint8_t)(0)<<7);
 
   Store_TX_float(tx_data, SHT_temperature, ptr);
@@ -33,6 +33,8 @@ void CommWithServer(){
   
 
   Send(tx_data, ptr);
+
+  reqClock = false;
 }
 
 void Store_TX_float(uint8_t *arr, float val, uint8_t& ptr){
@@ -126,9 +128,11 @@ void ProcessReceivedData(uint8_t data[]){
       garden3_watering_duration = data[3] * 60000UL;
       watering_evening_hour2 = data[4];
       watering_evening_hour3 = data[5];
-    case 240: // time synchronization
-      time_ntp_hour = data[2];
-      new_ntp_arrived = true;
+      break;
+    case 66: // time synchronization
+      clock_h = data[2];
+      clock_min = data[3];
+      clock_valid = true;
     break;
     case 199://ending packet
       xServerEndPacket = true;
@@ -137,7 +141,7 @@ void ProcessReceivedData(uint8_t data[]){
       Serial.println(F("Not defined command!"));
       
   }
-  if (data[1]!=199 && data[1]!=240)
+  if (data[1]!=199 && data[1]!=66)
     SaveToEEPROM();
 }
 

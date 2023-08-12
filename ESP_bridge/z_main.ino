@@ -14,11 +14,11 @@ void loop(){
   }else{
     minutes_latch = false;
   }*/
-  ntp.update();
+  //ntp.update();
   if (CheckTimer(tmrSendDataToServer, 15000UL)){
       CommWithServer(false);
-      Serial.println(ntp.formattedTime("%d. %B %Y")); // dd. Mmm yyyy
-      Serial.println(ntp.formattedTime("%A %T")); // Www hh:mm:ss
+      //Serial.println(ntp.formattedTime("%d. %B %Y")); // dd. Mmm yyyy
+      //Serial.println(ntp.formattedTime("%A %T")); // Www hh:mm:ss
   }
   if(bridgeSerial.available()>0)
     Serial.println("RECEIVING from arduino");

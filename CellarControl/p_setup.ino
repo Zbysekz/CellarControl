@@ -95,11 +95,12 @@ void setup(){
 
   OneWireDevicesPrintAddr(); // to find address of dallas temperature sensors
 
-  Serial.println(F("Setup finished"));
-
   polybox_autMan = 1;
   polybox_setpoint = 2;
   SaveToEEPROM();
+
+  reqClock = true;
+  Serial.println(F("Setup finished"));
 }
 
 void SaveToEEPROM(){
