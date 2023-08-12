@@ -125,10 +125,18 @@ void ProcessReceivedData(uint8_t data[]){
     break; 
     case 28:
       garden2_watering_duration = data[2] * 60000UL; // in minutes
-      garden3_watering_duration = data[3] * 60000UL;
-      watering_evening_hour2 = data[4];
-      watering_evening_hour3 = data[5];
       break;
+    case 29:
+      garden3_watering_duration = data[2] * 60000UL;
+    break;
+    case 30:
+      watering_morning_hour2 = data[2];
+      watering_morning_hour3 = watering_morning_hour2;
+    break;
+    case 31:
+      watering_evening_hour2 = data[2];
+      watering_evening_hour3 = watering_evening_hour2;
+    break;
     case 66: // time synchronization
       clock_h = data[2];
       clock_min = data[3];

@@ -34,12 +34,6 @@ void loop(){
       ControlFan();
       ControlPolyboxAndFermentor();
       ControlGarden();
-      Serial.print("poly:");
-      Serial.println(polybox_setpoint);
-      Serial.println(temp_polybox);
-      Serial.print("ferm:");
-      Serial.println(fermentor_setpoint);
-      Serial.println(temp_fermentor);
     }
 
   }

@@ -143,6 +143,7 @@ void ControlGarden(){
 
     if((clock_h==watering_morning_hour3 || clock_h==watering_evening_hour3)&&clock_min == 30){
         if(garden3_autMan){
+          Serial.println("SET2 ON!!!");
             garden3_onOff = true;
             garden3_watering_tmr = millis();
         }
@@ -153,6 +154,7 @@ void ControlGarden(){
   if(garden2_autMan && garden2_onOff){
      if((unsigned long)(millis() - garden2_watering_tmr) >= garden2_watering_duration){
        garden2_onOff = false;
+       Serial.println("SET2 OFF");
      }
   }
   if(garden3_autMan && garden3_onOff){
@@ -169,13 +171,26 @@ void ControlGarden(){
   if(CheckTimer(tmrReqClock, 6*60*60000L)){ // 6 hours
       reqClock = true;
     }
-    if(CheckTimer(tmrClock, 60000L)){
-      if(clock_valid){
-        if(++clock_min >= 60){
-          clock_min = 0;
-          if(++clock_h >=24)
-            clock_h = 0;
-        }
+  if(CheckTimer(tmrClock, 60000L)){
+    if(clock_valid){
+      if(++clock_min >= 60){
+        clock_min = 0;
+        if(++clock_h >=24)
+          clock_h = 0;
       }
     }
+  }
+Serial.print("Garden:");
+Serial.print(garden1_onOff);    
+Serial.print(garden2_onOff);    
+Serial.println(garden3_onOff);    
+
+Serial.println(clock_valid);
+Serial.println(clock_h);
+Serial.println(clock_min);    
+
+Serial.println(garden2_autMan);
+Serial.println(garden2_watering_duration/60000UL);
+Serial.println(watering_morning_hour2);
+
 }
