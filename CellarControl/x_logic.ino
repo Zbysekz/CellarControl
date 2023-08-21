@@ -44,7 +44,7 @@ void ControlWaterPump(){
 
 void ControlFan(){
   // ------- FAN CONTROL
-  if(fanControl_autMan){
+  /*if(fanControl_autMan){
     if((errorFlags & (1UL << ERROR_SHT20))==0){
       if(SHT_temperature < SHT_dew_point + 1.0){
           fan_onOff = true;
@@ -53,8 +53,8 @@ void ControlFan(){
     }else{
       fan_onOff = false;
     }
-  }
-
+  }*/
+  Serial.println("Fan:"+(String)fan_onOff);
   digitalWrite(PIN_FAN, fan_onOff);
 }
 
@@ -126,8 +126,8 @@ void ControlPolyboxAndFermentor(){
     }
   }*/
 
-  digitalWrite(PIN_VALVE_CELLAR1, valve_cellar1_onOff);
-  digitalWrite(PIN_VALVE_CELLAR2, valve_cellar2_onOff);
+  digitalWrite(PIN_VALVE_CELLAR1, valve_cellar1_onOff&& !pump_paused);
+  digitalWrite(PIN_VALVE_CELLAR2, valve_cellar2_onOff&& !pump_paused);
 }
 
 void ControlGarden(){
