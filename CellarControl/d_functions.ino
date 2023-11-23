@@ -45,13 +45,13 @@ uint32_t ReadValuel(uint8_t *arr, uint8_t &ptr){
   return result;
 }
 uint16_t ReadValue(uint8_t *arr, uint8_t &ptr){
-  uint16_t result = (arr[ptr]*256 + arr[ptr+1]);
+  uint16_t result = (arr[ptr+1]*256 + arr[ptr]);
   ptr+=2;
   return result;
 }
 void StoreValue(uint8_t *arr, uint16_t val, uint8_t &ptr){
-   arr[ptr++] = val/256;
    arr[ptr++] = val%256;
+   arr[ptr++] = val/256;
 }
 void StoreValuel(uint8_t *arr, uint32_t val, uint8_t &ptr){
    arr[ptr++] = (uint8_t)((val&0xFF000000)>>24);

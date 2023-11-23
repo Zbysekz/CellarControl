@@ -99,6 +99,9 @@ void ProcessReceivedData(uint8_t data[]){
       fermentor_setpoint = data[2];
       fermentor_hysteresis = data[3]/10.0;
     break;
+    case 8:
+    fermentor_heating_onOff = data[2];
+    break;
     case 20:
       garden1_autMan = data[2];
     break;

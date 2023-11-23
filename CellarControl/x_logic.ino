@@ -130,6 +130,12 @@ void ControlPolyboxAndFermentor(){
   digitalWrite(PIN_VALVE_CELLAR2, valve_cellar2_onOff&& !pump_paused);
 }
 
+void ControlFermentorHeating(){
+  if (!fermentor_autMan && fermentor_heating_onOff &&  ((errorFlags & (1UL << ERROR_TEMP))==0)){
+    digitalWrite(PIN_FERMENTER_HEATING, temp_fermentor < fermentor_setpoint);
+  }else
+  digitalWrite(PIN_FERMENTER_HEATING,false);
+}
 void ControlGarden(){
   
   //start of watering

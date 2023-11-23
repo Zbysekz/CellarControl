@@ -71,7 +71,7 @@ int gi;//for for loops in switch-case
 
 #define DATA_SEND_ID 109
 
-#define PUMP_LONG_RUN 10*60000UL
+#define PUMP_LONG_RUN 30*60000UL
 #define PUMP_PAUSE_TIME 30*60000UL
 
 #define PIN_ONE_WIRE_BUS 14
