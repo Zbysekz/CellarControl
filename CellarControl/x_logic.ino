@@ -1,7 +1,7 @@
 
 
 void ControlWaterPump(){ 
-  bool water_detected = !digitalRead(PIN_WATER_LEVEL);
+  bool water_detected = digitalRead(PIN_WATER_LEVEL);
 
   if (!water_pump_alarm){
     ResetTimer(tmrWaterPumpAlarmReset);
