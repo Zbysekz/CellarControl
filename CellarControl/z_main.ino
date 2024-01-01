@@ -24,15 +24,10 @@ void loop(){
         errorFlags &= ~(1UL << ERROR_TEMP); // clear that error
       
       
-      if((errorFlags & (1UL << ERROR_TEMP))==0){
-      ;//Serial.println(temp_cellar);          
-          //    digitalWrite(PIN_FERMENTER_HEATING, temp_cellar < 0);
-      }else{
-        digitalWrite(PIN_FERMENTER_HEATING,false);
-      }
       ControlWaterPump();
       ControlFan();
       ControlPolyboxAndFermentor();
+      ControlFermentorHeating();
       ControlGarden();
     }
 

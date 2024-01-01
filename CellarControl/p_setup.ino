@@ -47,6 +47,10 @@ void setup(){
 
     uint16_t bits = ReadValue(bytes, ptr);
 
+    Serial.print("Reading bb");
+    Serial.println(bits);
+        
+
     polybox_autMan = bits&(1<<0);
     fanControl_autMan = bits&(1<<1);
     fan_onOff = bits&(1<<2);
@@ -124,6 +128,10 @@ void SaveToEEPROM(){
   
   Serial.println("stored len:");
   Serial.println(ptr);
+Serial.print("Storing bb");
+Serial.println(bytes[0]);
+Serial.println(bytes[1]);
+  
   if(ptr!=EEPROM_ARR_LEN)
     Serial.print("Write param size vs defined MISMATCH!!!!");
 

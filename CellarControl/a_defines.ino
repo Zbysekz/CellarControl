@@ -3,7 +3,7 @@ DeviceAddress addrTempSensorFermentor = {0x28,0xFF,0x64,0x1E,0x15,0xEA,0x6A,0x9D
 DeviceAddress addrTempSensorPolybox = {0x28,0xFF,0x64,0x1E,0x15,0x13,0x5C,0xD5};
 DeviceAddress addrTempSensorCellar = {0x28,0xFF,0x64,0x1F,0x76,0x7F,0xA5,0xE4};
 
-#define EEADDR_START 0
+#define EEADDR_START 64
 
 //parameters
 float triplePoint1=0.0, boilingPoint1=98.0, triplePoint2=0.0, boilingPoint2=98.0,
@@ -74,7 +74,7 @@ int gi;//for for loops in switch-case
 
 #define DATA_SEND_ID 109
 
-#define PUMP_LONG_RUN 10*60000UL
+#define PUMP_LONG_RUN 30*60000UL
 #define PUMP_PAUSE_TIME 30*60000UL
 
 #define PIN_ONE_WIRE_BUS 14
