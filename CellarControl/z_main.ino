@@ -17,6 +17,15 @@ void loop(){
         Serial.println("Temp:");
         Serial.println(SHT_temperature);
       }*/
+
+      Serial.print("water_detected:");
+      Serial.println(water_detected);
+
+      Serial.print("cnt_per_h:");
+      Serial.println(cntWaterPumpActivationsPerHour);
+      Serial.print("alarm:");
+      Serial.println(water_pump_alarm);
+      Serial.println(tmrWaterPumpOnDelay);      
       
       if(!ReadTemperatures()) //read all temp probes
         errorFlags |= 1UL << ERROR_TEMP;

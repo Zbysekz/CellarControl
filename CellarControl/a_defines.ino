@@ -39,11 +39,11 @@ uint8_t watering_evening_hour2, watering_evening_hour3;
 bool fermentor_cool_req, polybox_cool_req;
 
 // water pump control
-bool water_pump_out;
+bool water_pump_out, water_detected;
 #define WATER_PUMP_MAX_ON_TIME 3*60000UL
 #define WATER_PUMP_ON_DELAY_NORMAL 10000UL
 #define WATER_PUMP_ON_DELAY_LONG 60*5000UL
-#define WATER_PUMP_OFF_DELAY 8000UL
+#define WATER_PUMP_OFF_DELAY 9000UL
 #define WATER_PUMP_ALARM_RESET 10*60000UL
 
 unsigned long WATER_PUMP_ON_DELAY = 0UL;

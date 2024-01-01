@@ -1,7 +1,7 @@
 
 
 void ControlWaterPump(){ 
-  bool water_detected = digitalRead(PIN_WATER_LEVEL);
+  water_detected = digitalRead(PIN_WATER_LEVEL);
 
   if (!water_pump_alarm){
     ResetTimer(tmrWaterPumpAlarmReset);
@@ -10,6 +10,7 @@ void ControlWaterPump(){
         if(CheckTimer(tmrWaterPumpOnDelay, WATER_PUMP_ON_DELAY)){
           water_pump_out=true;
           cntWaterPumpActivationsPerHour += 1; 
+          ResetTimer(tmrWaterPumpOnDelay);
         }
       }else{
         ResetTimer(tmrWaterPumpOnDelay);
@@ -40,13 +41,14 @@ void ControlWaterPump(){
     }
   }
 
-  if(CheckTimer(tmrWaterPumpInstensityCnt, 60*60000UL)){ //1hour period
-      pump_last_activations_per_h = cntWaterPumpActivationsPerHour;
-       
-      if (cntWaterPumpActivationsPerHour > 20)
+  if (cntWaterPumpActivationsPerHour < 20)
         WATER_PUMP_ON_DELAY = WATER_PUMP_ON_DELAY_NORMAL;
       else
         WATER_PUMP_ON_DELAY = WATER_PUMP_ON_DELAY_LONG;
+
+  if(CheckTimer(tmrWaterPumpInstensityCnt, 60*60000UL)){ //1hour period
+      pump_last_activations_per_h = cntWaterPumpActivationsPerHour;
+       
       cntWaterPumpActivationsPerHour = 0;
     }
 
