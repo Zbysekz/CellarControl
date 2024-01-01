@@ -23,6 +23,7 @@ void CommWithServer(){
   Store_TX_float(tx_data, temp_polybox, ptr);
   Store_TX_float(tx_data, temp_cellar, ptr);
   Store_TX_float(tx_data, temp_fermentor, ptr);
+  Store_TX_float(tx_data, pump_last_activations_per_h, ptr);
 
   Serial.print("poly:");
   Serial.println(temp_polybox);

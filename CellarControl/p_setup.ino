@@ -121,6 +121,7 @@ void SaveToEEPROM(){
   bytes[ptr++] = watering_morning_hour3;
   bytes[ptr++] = watering_evening_hour2;
   bytes[ptr++] = watering_evening_hour3;
+  
   Serial.println("stored len:");
   Serial.println(ptr);
   if(ptr!=EEPROM_ARR_LEN)

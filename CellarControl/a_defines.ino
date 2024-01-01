@@ -41,18 +41,21 @@ bool fermentor_cool_req, polybox_cool_req;
 // water pump control
 bool water_pump_out;
 #define WATER_PUMP_MAX_ON_TIME 3*60000UL
-#define WATER_PUMP_ON_DELAY 10000UL
+#define WATER_PUMP_ON_DELAY_NORMAL 10000UL
+#define WATER_PUMP_ON_DELAY_LONG 60*5000UL
 #define WATER_PUMP_OFF_DELAY 8000UL
 #define WATER_PUMP_ALARM_RESET 10*60000UL
 
-
+unsigned long WATER_PUMP_ON_DELAY = 0UL;
+unsigned long cntWaterPumpActivationsPerHour;
+unsigned long pump_last_activations_per_h = 0;
 //errors
 unsigned long errorFlags;
 bool paramsValid = false;
 
 bool water_pump_alarm;
 //timers
-unsigned long tmrControlLoop,tmrCommWithServer, tmrFreezer, tmrWaterPumpAlarmReset,tmrWaterPumpOnDelay,tmrWaterPumpOnTime,tmrWaterPumpOffDelay;
+unsigned long tmrControlLoop,tmrCommWithServer, tmrFreezer, tmrWaterPumpAlarmReset,tmrWaterPumpOnDelay,tmrWaterPumpOnTime,tmrWaterPumpOffDelay,tmrWaterPumpInstensityCnt;
 int freezerCooled;
 unsigned long tmrPumpPause, tmrPumpLongRun;
 bool pump_paused;
