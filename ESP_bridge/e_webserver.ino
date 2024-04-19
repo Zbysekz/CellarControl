@@ -3,11 +3,11 @@
 // HTML web page to handle 3 input fields (input1, input2, input3)
 const char index_html[] PROGMEM = R"rawliteral(
 <!DOCTYPE HTML><html><head>
-  <title>ESP bridge for PowerWall</title>
+  <title>ESP bridge for CellarControl</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv='refresh' content='30'> 
   </head><body>
-  <h1>ESP bridge for PowerWall</h1>
+  <h1>ESP bridge for CellarControl</h1>
   <form action="/" method="post" accept-charset=utf-8>
     <input type="submit" name="reboot" value="reboot">
   </form><br>
