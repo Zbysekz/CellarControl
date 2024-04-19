@@ -4,8 +4,6 @@
 #include <ESPAsyncWebServer.h>
 #include <ArduinoOTA.h>
 #include <SoftwareSerial.h>
-#include "NTP.h"
-#include <WiFiUdp.h>
 
 #include "credentials/credentials.h" // separate file for credentials
 

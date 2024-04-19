@@ -23,7 +23,7 @@ void ConnectToWifi(){
 }
 void CommWithServer(bool dataForServerReady){
 //vytvorime spojeni, posleme data a precteme jestli nejaka neprisla, pak zavreme spojeni
-    if (!wifiClient.connect(ipServer, 23)) {
+    if (!wifiClient.connect(ipServer, 3666)) {
           Serial.println("Connection to server failed! IP:"+ipServer.toString());
         } else {
 

@@ -12,7 +12,6 @@ void ResetTimer(unsigned long &timer){
   timer = millis();
 }
 
-
 String formatVal(float val, int minWidth=5, int precision=1);
    
 String formatVal(float val, int minWidth, int precision){
@@ -28,7 +27,9 @@ void StoreValue(uint8_t *arr, float val, uint8_t &ptr){
 }
 
 uint8_t ReadValue(uint8_t *arr, uint8_t &ptr){
-  return (arr[ptr++]*256 + arr[ptr++])/10.0;
+  uint8_t res = (arr[ptr]*256 + arr[ptr+1])/10.0;
+  ptr+=2;
+  return res;
 }
 
 //calculation of CRC16, corresponds to CRC-16/XMODEM on https://crccalc.com/﻿

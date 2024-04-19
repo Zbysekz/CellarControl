@@ -14,11 +14,11 @@ IPAddress ipServer(192, 168, 0, 3);
 WiFiClient wifiClient;
 
 #define BUFFER_SIZE 50
-long unsigned int tmrSendDataToServer, tmrCheckForData;
+long unsigned int tmrSendDataToServer, tmrCheckForData, tmrTimeoutReceive;
 uint8_t read_buffer[BUFFER_SIZE];
 uint8_t rx, expected_len, buffer_ptr, receive_state;
 bool minutes_latch;
 SoftwareSerial bridgeSerial(D2, D3); // RX, TX
 
-WiFiUDP wifiUdp;
-NTP ntp(wifiUdp);
+// comm statistics
+uint32_t ok_packets, invalid_packets1, invalid_packets2, invalid_packets3;
