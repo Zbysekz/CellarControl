@@ -21,4 +21,5 @@ bool minutes_latch;
 SoftwareSerial bridgeSerial(D2, D3); // RX, TX
 
 // comm statistics
-uint32_t ok_packets, invalid_packets1, invalid_packets2, invalid_packets3;
+uint32_t serial_ok_packets, serial_invalid_packets1, serial_invalid_packets2, serial_invalid_packets3;
+uint32_t tcp_ok_packets, tcp_conn_failed;
