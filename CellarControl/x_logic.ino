@@ -160,9 +160,8 @@ void ControlGarden(){
         }
     }
 
-    if((clock_h==watering_morning_hour3 || clock_h==watering_evening_hour3)&&clock_min == 30){
+    if((clock_h==watering_morning_hour3 || clock_h==watering_evening_hour3)&&clock_min == 0){
         if(garden3_autMan){
-          Serial.println("SET2 ON!!!");
             garden3_onOff = true;
             garden3_watering_tmr = millis();
         }

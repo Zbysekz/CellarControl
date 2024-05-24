@@ -1,6 +1,6 @@
 void CommWithServer(){
 
-  uint8_t tx_data[50];
+  uint8_t tx_data[100];
   
   uint8_t ptr = 0;
   tx_data[ptr++] = DATA_SEND_ID;
@@ -23,7 +23,14 @@ void CommWithServer(){
   Store_TX_float(tx_data, temp_polybox, ptr);
   Store_TX_float(tx_data, temp_cellar, ptr);
   Store_TX_float(tx_data, temp_fermentor, ptr);
-  Store_TX_float(tx_data, pump_last_activations_per_h, ptr);
+
+  Store_TX_uint16(tx_data, pump_last_activations_per_h, ptr);
+  Store_TX_uint16(tx_data, garden2_watering_duration/60000UL, ptr);
+  Store_TX_uint16(tx_data, garden3_watering_duration/60000UL, ptr);
+
+  Store_TX_uint16(tx_data, watering_morning_hour2, ptr); // 2 is same as 3
+  Store_TX_uint16(tx_data, watering_evening_hour2, ptr);
+
 
   Serial.print("poly:");
   Serial.println(temp_polybox);
@@ -41,6 +48,10 @@ void CommWithServer(){
 void Store_TX_float(uint8_t *arr, float val, uint8_t& ptr){
   arr[ptr++] = uint8_t((((uint16_t)(val*10))&0xFF00)>>8);
   arr[ptr++] = uint8_t(((uint16_t)(val*10))&0xFF);
+}
+void Store_TX_uint16(uint8_t *arr, uint16_t val, uint8_t& ptr){
+  arr[ptr++] = uint8_t(((val)&0xFF00)>>8);
+  arr[ptr++] = uint8_t((val)&0xFF);
 }
 
 void Send(uint8_t d[],uint8_t d_len){
